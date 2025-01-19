@@ -1,0 +1,1438 @@
+Timestep 1000 127 H2O
+Timestep 120000 1 H
+Timestep 297000 1 H2O
+Timestep 318000 1 H
+Timestep 384000 1 H
+Timestep 390000 1 H
+Timestep 455000 1 H
+Timestep 517000 1 H
+Timestep 562000 1 H
+Timestep 567000 1 O
+Timestep 571000 1 H
+Timestep 591000 1 O
+Timestep 599000 1 O
+Timestep 601000 1 H
+Timestep 641000 1 H2
+Timestep 644000 1 H
+Timestep 680000 1 H
+Timestep 683000 1 H
+Timestep 684000 1 H
+Timestep 693000 1 H
+Timestep 701000 1 H
+Timestep 707000 1 H
+Timestep 708000 1 H
+Timestep 721000 1 H
+Timestep 728000 1 H
+Timestep 738000 1 H
+Timestep 746000 1 H
+Timestep 768000 1 O
+Timestep 771000 1 O
+Timestep 779000 1 H
+Timestep 783000 1 CHO
+Timestep 789000 1 HO
+Timestep 791000 1 H
+Timestep 792000 1 H
+Timestep 804000 1 H
+Timestep 809000 1 H
+Timestep 814000 1 O
+Timestep 823000 1 H
+Timestep 836000 1 H
+Timestep 848000 1 H
+Timestep 853000 1 H
+Timestep 854000 1 O
+Timestep 856000 1 H
+Timestep 868000 1 HO 1 H
+Timestep 869000 1 O
+Timestep 870000 1 HO
+Timestep 872000 1 H
+Timestep 877000 1 H
+Timestep 885000 3 H 1 CH3O
+Timestep 886000 2 H
+Timestep 889000 1 H
+Timestep 897000 2 H
+Timestep 899000 1 H
+Timestep 909000 1 H
+Timestep 915000 1 O
+Timestep 916000 1 H
+Timestep 918000 2 H
+Timestep 927000 1 H
+Timestep 934000 1 O
+Timestep 941000 1 H
+Timestep 955000 1 H
+Timestep 956000 1 H
+Timestep 958000 1 O 1 H
+Timestep 959000 1 O
+Timestep 962000 1 H
+Timestep 967000 2 H
+Timestep 968000 1 H
+Timestep 975000 1 H
+Timestep 977000 1 H
+Timestep 984000 1 HO
+Timestep 985000 1 HO
+Timestep 986000 1 H
+Timestep 996000 2 H
+Timestep 1004000 1 H
+Timestep 1005000 1 H
+Timestep 1013000 1 H
+Timestep 1014000 1 H
+Timestep 1021000 1 HO
+Timestep 1026000 1 H 1 O
+Timestep 1027000 1 O
+Timestep 1030000 1 H
+Timestep 1031000 1 H
+Timestep 1033000 1 O
+Timestep 1034000 1 H
+Timestep 1045000 1 H
+Timestep 1057000 1 H
+Timestep 1059000 1 O
+Timestep 1067000 1 H
+Timestep 1069000 1 H
+Timestep 1074000 2 H
+Timestep 1075000 2 H
+Timestep 1077000 1 HO
+Timestep 1078000 1 H
+Timestep 1083000 1 H2
+Timestep 1084000 1 H
+Timestep 1085000 1 O
+Timestep 1087000 1 H
+Timestep 1088000 1 O
+Timestep 1091000 1 H
+Timestep 1097000 1 H
+Timestep 1100000 1 O 1 H
+Timestep 1101000 1 H
+Timestep 1105000 1 H
+Timestep 1109000 1 H
+Timestep 1111000 2 H
+Timestep 1112000 1 H
+Timestep 1130000 1 O
+Timestep 1137000 1 H2
+Timestep 1139000 1 O
+Timestep 1141000 1 H
+Timestep 1144000 1 H2
+Timestep 1146000 1 O
+Timestep 1153000 1 H
+Timestep 1156000 1 H
+Timestep 1158000 1 H
+Timestep 1159000 1 H
+Timestep 1160000 1 H
+Timestep 1161000 1 H
+Timestep 1163000 2 H
+Timestep 1165000 1 H
+Timestep 1166000 1 H
+Timestep 1168000 1 H
+Timestep 1175000 1 H
+Timestep 1176000 1 H
+Timestep 1178000 1 O 1 HO
+Timestep 1179000 1 HO
+Timestep 1180000 1 H
+Timestep 1187000 1 H
+Timestep 1189000 1 H2
+Timestep 1190000 1 C3H
+Timestep 1195000 1 H
+Timestep 1199000 1 H 1 HO
+Timestep 1200000 1 H
+Timestep 1206000 1 H
+Timestep 1210000 1 H
+Timestep 1216000 2 H
+Timestep 1218000 2 H
+Timestep 1219000 1 H
+Timestep 1227000 2 H 1 O
+Timestep 1232000 1 H
+Timestep 1235000 1 H
+Timestep 1236000 1 O
+Timestep 1240000 1 H
+Timestep 1243000 1 H
+Timestep 1244000 1 H
+Timestep 1249000 1 H
+Timestep 1253000 2 H
+Timestep 1259000 1 H
+Timestep 1263000 1 H
+Timestep 1264000 1 H
+Timestep 1265000 1 H
+Timestep 1266000 1 H2O
+Timestep 1271000 1 H
+Timestep 1278000 1 O
+Timestep 1279000 1 H
+Timestep 1281000 1 H
+Timestep 1283000 1 HO
+Timestep 1284000 1 H
+Timestep 1285000 1 H
+Timestep 1287000 1 H
+Timestep 1291000 1 H
+Timestep 1295000 1 H
+Timestep 1297000 1 HO
+Timestep 1301000 1 HO
+Timestep 1302000 1 O
+Timestep 1303000 1 H
+Timestep 1306000 1 H
+Timestep 1309000 1 H
+Timestep 1315000 1 H
+Timestep 1319000 2 H
+Timestep 1320000 1 O
+Timestep 1322000 1 H
+Timestep 1327000 1 H
+Timestep 1328000 1 H
+Timestep 1329000 1 H
+Timestep 1333000 1 HO
+Timestep 1334000 1 O 1 H
+Timestep 1336000 1 H
+Timestep 1338000 2 H
+Timestep 1339000 1 H
+Timestep 1341000 1 O
+Timestep 1342000 1 H
+Timestep 1343000 1 H2O
+Timestep 1344000 1 O
+Timestep 1347000 1 O
+Timestep 1349000 1 H
+Timestep 1359000 1 H
+Timestep 1361000 1 H
+Timestep 1365000 1 HO
+Timestep 1366000 1 H
+Timestep 1367000 1 H
+Timestep 1369000 1 H
+Timestep 1375000 1 H
+Timestep 1376000 1 H
+Timestep 1379000 2 H
+Timestep 1384000 1 H
+Timestep 1385000 2 O
+Timestep 1387000 1 O 1 H
+Timestep 1389000 1 HO
+Timestep 1391000 1 H
+Timestep 1393000 3 H
+Timestep 1394000 1 H
+Timestep 1397000 1 H2
+Timestep 1399000 1 HO 1 H
+Timestep 1403000 1 HO 1 H
+Timestep 1405000 1 H
+Timestep 1408000 2 H
+Timestep 1412000 1 H
+Timestep 1413000 1 HO
+Timestep 1414000 1 H
+Timestep 1415000 1 H
+Timestep 1419000 2 H
+Timestep 1420000 1 H
+Timestep 1421000 1 HO
+Timestep 1424000 1 O
+Timestep 1427000 1 O
+Timestep 1429000 1 H
+Timestep 1430000 1 H
+Timestep 1433000 1 O
+Timestep 1434000 1 H
+Timestep 1436000 1 O
+Timestep 1437000 1 H
+Timestep 1439000 1 H
+Timestep 1443000 1 H
+Timestep 1444000 2 HO
+Timestep 1447000 1 H
+Timestep 1451000 1 H
+Timestep 1452000 1 H
+Timestep 1456000 2 H
+Timestep 1457000 1 H2
+Timestep 1460000 1 H
+Timestep 1464000 1 O
+Timestep 1465000 1 H
+Timestep 1470000 1 H
+Timestep 1475000 2 H
+Timestep 1478000 1 H
+Timestep 1479000 1 H 1 O
+Timestep 1484000 1 H
+Timestep 1486000 1 H
+Timestep 1487000 1 H
+Timestep 1488000 1 H 1 O
+Timestep 1491000 1 H2 1 O
+Timestep 1492000 1 H
+Timestep 1493000 1 HO 1 H
+Timestep 1498000 1 O
+Timestep 1499000 2 H
+Timestep 1500000 1 H
+Timestep 1503000 1 H
+Timestep 1504000 2 H
+Timestep 1505000 1 H
+Timestep 1506000 1 H
+Timestep 1507000 2 H
+Timestep 1509000 1 HO
+Timestep 1513000 1 H 1 O
+Timestep 1518000 1 H
+Timestep 1519000 1 O
+Timestep 1520000 1 H
+Timestep 1521000 1 H
+Timestep 1522000 1 O
+Timestep 1523000 1 H2
+Timestep 1525000 1 H
+Timestep 1526000 1 C3H2
+Timestep 1528000 1 H
+Timestep 1532000 1 HO
+Timestep 1533000 1 H
+Timestep 1535000 1 H
+Timestep 1536000 1 H
+Timestep 1538000 1 H
+Timestep 1540000 1 H
+Timestep 1542000 1 H
+Timestep 1544000 1 H
+Timestep 1546000 1 HO
+Timestep 1547000 1 H
+Timestep 1548000 1 H2
+Timestep 1549000 1 H
+Timestep 1550000 1 H
+Timestep 1551000 1 O 1 H
+Timestep 1553000 1 H
+Timestep 1556000 2 H
+Timestep 1559000 1 H
+Timestep 1560000 1 H 1 O
+Timestep 1567000 1 H
+Timestep 1568000 1 H
+Timestep 1569000 3 H
+Timestep 1573000 1 H
+Timestep 1574000 1 H 1 O
+Timestep 1575000 1 H
+Timestep 1576000 2 H
+Timestep 1578000 1 H
+Timestep 1580000 1 H
+Timestep 1582000 1 H
+Timestep 1585000 3 H
+Timestep 1588000 1 H
+Timestep 1591000 1 HO
+Timestep 1594000 1 H
+Timestep 1599000 1 H2 2 H
+Timestep 1600000 1 H
+Timestep 1602000 1 HO
+Timestep 1603000 1 HO
+Timestep 1604000 1 H
+Timestep 1605000 1 H
+Timestep 1606000 1 H
+Timestep 1607000 1 H
+Timestep 1610000 1 H
+Timestep 1612000 1 O
+Timestep 1613000 1 H
+Timestep 1615000 1 H
+Timestep 1617000 1 H
+Timestep 1618000 1 H
+Timestep 1620000 1 H
+Timestep 1622000 1 O
+Timestep 1624000 1 O
+Timestep 1625000 2 H
+Timestep 1626000 2 H
+Timestep 1627000 1 H
+Timestep 1633000 1 HO
+Timestep 1634000 1 H
+Timestep 1636000 1 H
+Timestep 1637000 1 H
+Timestep 1640000 1 H
+Timestep 1642000 2 H
+Timestep 1643000 2 H
+Timestep 1644000 1 HO
+Timestep 1645000 1 H
+Timestep 1646000 1 H
+Timestep 1652000 2 H
+Timestep 1653000 1 H
+Timestep 1655000 1 H
+Timestep 1657000 1 H
+Timestep 1659000 1 H 1 O
+Timestep 1664000 1 O
+Timestep 1667000 2 H
+Timestep 1671000 1 H
+Timestep 1673000 1 H
+Timestep 1674000 1 H
+Timestep 1677000 1 H
+Timestep 1679000 1 H
+Timestep 1681000 1 H
+Timestep 1683000 1 H
+Timestep 1684000 1 H
+Timestep 1685000 1 H
+Timestep 1687000 1 H
+Timestep 1688000 1 H 1 O
+Timestep 1689000 1 HO
+Timestep 1691000 1 H
+Timestep 1693000 2 H
+Timestep 1694000 1 O
+Timestep 1695000 1 H
+Timestep 1696000 1 H
+Timestep 1698000 1 H2
+Timestep 1700000 2 H
+Timestep 1702000 1 HO 1 H
+Timestep 1704000 1 H 1 H2O
+Timestep 1706000 1 H 1 H2
+Timestep 1707000 1 H
+Timestep 1708000 1 H
+Timestep 1709000 1 H
+Timestep 1714000 3 H
+Timestep 1717000 1 H
+Timestep 1718000 1 H2 1 H
+Timestep 1723000 1 H
+Timestep 1724000 1 H
+Timestep 1725000 1 HO
+Timestep 1726000 1 H
+Timestep 1731000 1 H
+Timestep 1732000 2 H
+Timestep 1735000 1 H
+Timestep 1738000 1 O
+Timestep 1739000 1 O 1 H
+Timestep 1741000 2 H
+Timestep 1742000 1 H
+Timestep 1745000 1 O
+Timestep 1750000 2 H
+Timestep 1753000 1 H 1 HO
+Timestep 1758000 1 H
+Timestep 1762000 1 H
+Timestep 1763000 1 O
+Timestep 1764000 1 O 1 H
+Timestep 1766000 2 H
+Timestep 1767000 1 H
+Timestep 1770000 1 H
+Timestep 1772000 1 H
+Timestep 1773000 1 H
+Timestep 1778000 1 H
+Timestep 1780000 2 H 1 H2
+Timestep 1784000 2 H
+Timestep 1786000 2 H 1 O
+Timestep 1793000 1 H
+Timestep 1795000 2 H
+Timestep 1798000 1 H
+Timestep 1801000 1 H 1 HO
+Timestep 1803000 1 HO
+Timestep 1805000 1 H
+Timestep 1806000 1 H
+Timestep 1807000 1 H
+Timestep 1808000 1 H
+Timestep 1814000 2 H
+Timestep 1815000 1 O
+Timestep 1816000 1 H 1 O 1 HO
+Timestep 1817000 2 H
+Timestep 1819000 1 O
+Timestep 1820000 1 H 1 H2
+Timestep 1821000 2 H
+Timestep 1824000 2 H
+Timestep 1825000 1 O
+Timestep 1826000 1 H
+Timestep 1829000 1 HO
+Timestep 1830000 1 HO
+Timestep 1831000 3 H
+Timestep 1833000 1 H
+Timestep 1834000 1 H 1 HO
+Timestep 1838000 1 H
+Timestep 1839000 1 H
+Timestep 1840000 1 H
+Timestep 1843000 1 HO
+Timestep 1845000 1 H
+Timestep 1848000 1 H
+Timestep 1849000 2 H
+Timestep 1853000 1 H
+Timestep 1856000 1 H
+Timestep 1860000 1 H
+Timestep 1861000 1 O
+Timestep 1862000 1 H
+Timestep 1863000 1 H 2 HO
+Timestep 1865000 1 H
+Timestep 1866000 1 H
+Timestep 1868000 1 C3H
+Timestep 1870000 2 H
+Timestep 1871000 1 H
+Timestep 1872000 1 HO 1 O 1 H
+Timestep 1874000 1 O
+Timestep 1875000 1 H 1 HO
+Timestep 1878000 2 H
+Timestep 1879000 2 H
+Timestep 1880000 1 H
+Timestep 1881000 3 H
+Timestep 1882000 1 H
+Timestep 1885000 1 H
+Timestep 1886000 1 H2
+Timestep 1887000 1 O 1 H
+Timestep 1888000 1 H
+Timestep 1890000 1 O
+Timestep 1891000 1 HO
+Timestep 1895000 2 H 1 HO
+Timestep 1897000 1 CO
+Timestep 1899000 1 CH
+Timestep 1900000 1 O
+Timestep 1901000 1 C3H2
+Timestep 1906000 1 H
+Timestep 1908000 1 H 1 H2
+Timestep 1909000 1 H
+Timestep 1911000 1 H
+Timestep 1912000 1 H
+Timestep 1913000 1 H
+Timestep 1915000 1 H
+Timestep 1920000 2 H
+Timestep 1921000 1 H
+Timestep 1924000 1 O
+Timestep 1925000 1 H
+Timestep 1927000 2 H
+Timestep 1928000 1 H
+Timestep 1930000 1 H
+Timestep 1934000 1 H
+Timestep 1936000 1 O
+Timestep 1937000 1 H
+Timestep 1938000 1 H
+Timestep 1939000 1 H
+Timestep 1943000 2 H
+Timestep 1944000 1 H
+Timestep 1946000 1 H
+Timestep 1947000 1 H
+Timestep 1948000 1 H
+Timestep 1951000 1 H
+Timestep 1952000 2 H
+Timestep 1953000 1 H
+Timestep 1955000 2 H
+Timestep 1956000 1 H2
+Timestep 1959000 1 O 1 H
+Timestep 1960000 1 HO 1 H
+Timestep 1961000 1 H
+Timestep 1962000 1 H
+Timestep 1963000 1 H
+Timestep 1964000 1 H
+Timestep 1965000 1 H
+Timestep 1966000 1 O
+Timestep 1967000 1 H
+Timestep 1969000 1 H
+Timestep 1970000 1 H 1 H2
+Timestep 1971000 1 H
+Timestep 1973000 1 H
+Timestep 1975000 2 H
+Timestep 1978000 2 H
+Timestep 1980000 1 H
+Timestep 1983000 2 H
+Timestep 1985000 1 H
+Timestep 1987000 1 H
+Timestep 1988000 1 H
+Timestep 1989000 2 H
+Timestep 1990000 1 H
+Timestep 1994000 1 O
+Timestep 1995000 1 H 1 CO
+Timestep 1996000 1 H
+Timestep 1997000 1 H
+Timestep 1999000 1 H2 2 H
+Timestep 2002000 2 H
+Timestep 2003000 1 H
+Timestep 2005000 2 H
+Timestep 2006000 1 H
+Timestep 2010000 1 H 1 H2
+Timestep 2012000 1 C3H3 2 H
+Timestep 2015000 2 H
+Timestep 2016000 1 O 1 H
+Timestep 2018000 1 H
+Timestep 2023000 1 CO
+Timestep 2024000 1 HO
+Timestep 2025000 1 H
+Timestep 2026000 1 H
+Timestep 2027000 1 H
+Timestep 2028000 1 H
+Timestep 2029000 1 H
+Timestep 2030000 1 H
+Timestep 2031000 1 H
+Timestep 2032000 2 O
+Timestep 2033000 1 H
+Timestep 2035000 1 O
+Timestep 2036000 1 H
+Timestep 2038000 1 O
+Timestep 2039000 1 H
+Timestep 2040000 1 H
+Timestep 2043000 1 O
+Timestep 2044000 1 HO 1 H
+Timestep 2046000 2 H
+Timestep 2050000 2 H
+Timestep 2052000 1 O
+Timestep 2053000 1 H
+Timestep 2055000 1 CO
+Timestep 2056000 1 H2
+Timestep 2058000 1 H
+Timestep 2060000 1 H 1 O
+Timestep 2062000 1 HO
+Timestep 2063000 1 H2
+Timestep 2064000 1 H
+Timestep 2065000 1 H
+Timestep 2067000 1 H
+Timestep 2068000 1 O
+Timestep 2069000 2 H
+Timestep 2070000 1 O
+Timestep 2071000 1 O
+Timestep 2072000 1 H
+Timestep 2073000 1 H
+Timestep 2074000 1 H
+Timestep 2076000 1 O
+Timestep 2080000 1 H
+Timestep 2081000 1 H
+Timestep 2082000 1 H
+Timestep 2088000 1 H
+Timestep 2090000 1 H
+Timestep 2091000 1 O
+Timestep 2093000 2 H
+Timestep 2094000 1 H
+Timestep 2097000 1 CO
+Timestep 2101000 1 H
+Timestep 2102000 2 H
+Timestep 2103000 1 C2H2
+Timestep 2107000 1 H
+Timestep 2108000 1 H2
+Timestep 2114000 1 H
+Timestep 2115000 1 H
+Timestep 2116000 1 H
+Timestep 2120000 2 H
+Timestep 2121000 1 H
+Timestep 2125000 1 H
+Timestep 2126000 1 O
+Timestep 2127000 1 O
+Timestep 2128000 1 O 3 H
+Timestep 2129000 2 H
+Timestep 2131000 1 H
+Timestep 2133000 1 H
+Timestep 2134000 1 H
+Timestep 2135000 1 CH
+Timestep 2136000 2 H
+Timestep 2137000 2 H
+Timestep 2139000 1 H
+Timestep 2144000 2 H
+Timestep 2147000 2 H
+Timestep 2149000 2 H
+Timestep 2150000 1 H
+Timestep 2151000 1 H
+Timestep 2152000 1 H
+Timestep 2154000 1 H
+Timestep 2155000 1 H
+Timestep 2156000 1 H
+Timestep 2157000 1 H
+Timestep 2159000 2 H
+Timestep 2162000 4 H
+Timestep 2163000 1 O 1 H
+Timestep 2164000 1 H
+Timestep 2166000 1 H 1 O
+Timestep 2167000 1 H
+Timestep 2168000 1 H 1 O
+Timestep 2169000 1 H 2 O
+Timestep 2171000 2 H
+Timestep 2174000 2 H
+Timestep 2175000 2 H
+Timestep 2176000 1 H2 1 C3H3 2 H
+Timestep 2181000 2 H
+Timestep 2183000 2 H
+Timestep 2184000 1 HO
+Timestep 2185000 1 O
+Timestep 2186000 1 H
+Timestep 2187000 1 H
+Timestep 2189000 2 H
+Timestep 2190000 1 H
+Timestep 2191000 1 H
+Timestep 2193000 1 H
+Timestep 2194000 1 H
+Timestep 2196000 1 H
+Timestep 2198000 1 H
+Timestep 2199000 1 H 1 O
+Timestep 2202000 1 HO 1 H
+Timestep 2203000 2 H
+Timestep 2205000 2 H
+Timestep 2207000 1 H
+Timestep 2211000 3 H
+Timestep 2212000 2 H
+Timestep 2215000 1 H 1 O
+Timestep 2216000 1 H 1 CO
+Timestep 2217000 1 O
+Timestep 2218000 1 O
+Timestep 2221000 1 H
+Timestep 2222000 1 H
+Timestep 2223000 2 H
+Timestep 2225000 1 H
+Timestep 2226000 2 H
+Timestep 2227000 1 H
+Timestep 2229000 1 H
+Timestep 2230000 1 O 1 CO
+Timestep 2231000 1 H
+Timestep 2235000 2 H
+Timestep 2236000 1 H
+Timestep 2238000 1 H
+Timestep 2239000 1 H
+Timestep 2242000 1 H
+Timestep 2243000 1 H
+Timestep 2244000 1 H
+Timestep 2245000 1 H
+Timestep 2247000 3 H
+Timestep 2248000 1 H 1 O
+Timestep 2252000 4 H
+Timestep 2255000 2 H
+Timestep 2257000 1 H
+Timestep 2260000 1 H
+Timestep 2261000 2 H
+Timestep 2262000 1 H
+Timestep 2264000 2 H
+Timestep 2268000 3 H
+Timestep 2269000 1 H
+Timestep 2270000 1 H
+Timestep 2272000 2 H
+Timestep 2274000 1 O 1 H
+Timestep 2276000 1 H
+Timestep 2277000 3 H
+Timestep 2278000 2 H
+Timestep 2280000 1 H
+Timestep 2283000 4 H
+Timestep 2285000 2 H
+Timestep 2287000 2 H
+Timestep 2288000 1 H
+Timestep 2289000 1 H 2 O
+Timestep 2291000 1 H
+Timestep 2292000 1 C2H
+Timestep 2293000 1 H
+Timestep 2296000 1 H
+Timestep 2298000 1 H
+Timestep 2299000 1 H
+Timestep 2301000 1 H 1 CO
+Timestep 2303000 4 H
+Timestep 2304000 1 H
+Timestep 2305000 2 H
+Timestep 2307000 2 H 1 HO 1 O
+Timestep 2309000 1 H
+Timestep 2310000 1 H
+Timestep 2313000 1 H
+Timestep 2314000 1 H
+Timestep 2315000 1 H
+Timestep 2321000 2 H
+Timestep 2322000 1 H 1 HO
+Timestep 2323000 1 H
+Timestep 2325000 2 O 1 H
+Timestep 2326000 1 H2 1 H
+Timestep 2328000 3 H 1 C2HO
+Timestep 2335000 1 H
+Timestep 2338000 1 CO 1 H
+Timestep 2339000 2 H
+Timestep 2343000 1 H 1 CO
+Timestep 2344000 1 H
+Timestep 2345000 1 HO
+Timestep 2346000 2 H
+Timestep 2353000 1 H
+Timestep 2355000 2 H
+Timestep 2356000 1 O 1 H 1 CO
+Timestep 2357000 1 H
+Timestep 2358000 1 C2O
+Timestep 2361000 1 H
+Timestep 2364000 1 H
+Timestep 2365000 1 CO 1 CH
+Timestep 2369000 1 H
+Timestep 2370000 2 H
+Timestep 2371000 1 H
+Timestep 2375000 1 H
+Timestep 2377000 1 H
+Timestep 2384000 2 H
+Timestep 2385000 1 H
+Timestep 2386000 1 CO
+Timestep 2391000 1 H 1 C2O
+Timestep 2392000 1 H
+Timestep 2393000 3 H
+Timestep 2394000 1 C2H2
+Timestep 2395000 1 H
+Timestep 2400000 1 H
+Timestep 2401000 1 H
+Timestep 2402000 1 O
+Timestep 2403000 2 H
+Timestep 2404000 1 H
+Timestep 2405000 2 H
+Timestep 2406000 1 H
+Timestep 2410000 1 H
+Timestep 2411000 1 H
+Timestep 2412000 2 H
+Timestep 2413000 2 H
+Timestep 2415000 1 H
+Timestep 2416000 2 H
+Timestep 2417000 1 H
+Timestep 2423000 2 H
+Timestep 2427000 1 H
+Timestep 2435000 2 H
+Timestep 2440000 1 H
+Timestep 2441000 2 H
+Timestep 2444000 1 CH
+Timestep 2445000 2 H
+Timestep 2447000 4 H
+Timestep 2448000 1 H
+Timestep 2449000 1 H
+Timestep 2452000 1 H
+Timestep 2453000 1 H2
+Timestep 2454000 1 H
+Timestep 2456000 2 H
+Timestep 2457000 2 H
+Timestep 2458000 1 H
+Timestep 2459000 1 O
+Timestep 2460000 1 H
+Timestep 2462000 1 CO 1 H
+Timestep 2463000 1 H
+Timestep 2465000 1 H
+Timestep 2466000 2 H
+Timestep 2467000 1 HO
+Timestep 2468000 1 C2H
+Timestep 2469000 1 H
+Timestep 2473000 1 H
+Timestep 2474000 1 H2
+Timestep 2475000 2 H
+Timestep 2476000 2 H
+Timestep 2477000 1 H
+Timestep 2478000 1 H
+Timestep 2479000 1 H
+Timestep 2480000 3 H
+Timestep 2485000 1 CO
+Timestep 2488000 1 HO 1 H
+Timestep 2489000 1 HO 1 C2H2
+Timestep 2490000 1 H
+Timestep 2492000 1 H
+Timestep 2494000 1 H
+Timestep 2499000 1 H
+Timestep 2501000 1 H
+Timestep 2502000 1 H
+Timestep 2504000 1 H
+Timestep 2506000 1 H
+Timestep 2508000 1 H
+Timestep 2509000 1 O
+Timestep 2510000 1 CO
+Timestep 2514000 1 CO 3 H
+Timestep 2515000 1 H
+Timestep 2516000 1 CO
+Timestep 2517000 1 C2
+Timestep 2519000 1 H2
+Timestep 2522000 1 H
+Timestep 2523000 1 H
+Timestep 2525000 2 H
+Timestep 2527000 1 H
+Timestep 2532000 1 H
+Timestep 2534000 1 H
+Timestep 2536000 1 H 1 C2H
+Timestep 2537000 1 H
+Timestep 2538000 1 H
+Timestep 2539000 1 CO
+Timestep 2540000 1 H
+Timestep 2541000 1 CO 1 H
+Timestep 2542000 2 H 1 CH
+Timestep 2543000 1 H 1 C2H
+Timestep 2544000 1 H
+Timestep 2546000 2 H
+Timestep 2549000 3 H 1 CO
+Timestep 2552000 3 H
+Timestep 2554000 1 H
+Timestep 2555000 1 H
+Timestep 2556000 2 H
+Timestep 2557000 2 H
+Timestep 2559000 2 H
+Timestep 2560000 1 H
+Timestep 2561000 1 H
+Timestep 2562000 1 H
+Timestep 2564000 3 H
+Timestep 2567000 1 H
+Timestep 2569000 1 H
+Timestep 2570000 1 CH2 1 H
+Timestep 2573000 1 H
+Timestep 2574000 1 H
+Timestep 2576000 1 H
+Timestep 2578000 1 H
+Timestep 2579000 3 H
+Timestep 2582000 1 H
+Timestep 2583000 3 H
+Timestep 2584000 1 C3H3 1 H
+Timestep 2588000 1 H
+Timestep 2590000 1 H
+Timestep 2592000 2 H
+Timestep 2593000 1 H
+Timestep 2595000 1 H 1 H2
+Timestep 2596000 1 H
+Timestep 2597000 1 C2H2 2 H
+Timestep 2600000 1 H
+Timestep 2601000 1 H
+Timestep 2602000 2 H 1 C
+Timestep 2604000 1 H
+Timestep 2607000 1 H
+Timestep 2610000 1 H
+Timestep 2611000 1 O 1 H
+Timestep 2612000 1 H
+Timestep 2613000 1 H
+Timestep 2619000 1 H 1 O
+Timestep 2621000 1 H
+Timestep 2624000 1 H
+Timestep 2627000 1 C2H 2 H
+Timestep 2630000 2 H
+Timestep 2631000 1 H
+Timestep 2634000 3 H
+Timestep 2638000 2 H
+Timestep 2643000 1 H
+Timestep 2644000 1 CH 1 H
+Timestep 2645000 1 CH2
+Timestep 2652000 1 H
+Timestep 2653000 2 H
+Timestep 2654000 2 H
+Timestep 2658000 1 H
+Timestep 2661000 1 H
+Timestep 2662000 1 C2H2
+Timestep 2665000 1 H
+Timestep 2668000 1 H
+Timestep 2670000 2 H
+Timestep 2674000 1 H
+Timestep 2675000 1 H
+Timestep 2676000 1 CH2
+Timestep 2680000 1 CO
+Timestep 2683000 2 H
+Timestep 2685000 1 H
+Timestep 2686000 1 H
+Timestep 2688000 3 H
+Timestep 2689000 1 H
+Timestep 2692000 1 H
+Timestep 2693000 1 C2H 1 H
+Timestep 2694000 1 O
+Timestep 2697000 1 H
+Timestep 2698000 2 H
+Timestep 2699000 2 H 1 C2H3
+Timestep 2700000 1 H
+Timestep 2702000 1 H
+Timestep 2703000 1 H
+Timestep 2704000 2 H
+Timestep 2705000 1 H
+Timestep 2706000 1 H
+Timestep 2707000 2 H
+Timestep 2708000 1 C2H
+Timestep 2709000 1 H
+Timestep 2710000 2 H
+Timestep 2711000 3 H
+Timestep 2712000 1 H 1 CH3
+Timestep 2713000 1 H
+Timestep 2714000 2 H 1 CH2
+Timestep 2715000 3 H
+Timestep 2716000 1 H
+Timestep 2718000 1 O 1 H
+Timestep 2719000 1 H
+Timestep 2720000 1 H
+Timestep 2721000 1 H
+Timestep 2722000 2 H
+Timestep 2724000 1 H 1 C2H2O
+Timestep 2726000 1 H
+Timestep 2728000 1 H
+Timestep 2733000 1 H
+Timestep 2737000 2 H
+Timestep 2738000 1 CO
+Timestep 2739000 2 H
+Timestep 2741000 2 H
+Timestep 2742000 1 H
+Timestep 2743000 1 CO 1 H
+Timestep 2744000 1 H
+Timestep 2746000 1 H
+Timestep 2747000 1 H
+Timestep 2751000 1 CO
+Timestep 2753000 1 H
+Timestep 2755000 1 H
+Timestep 2756000 1 H
+Timestep 2757000 1 H
+Timestep 2759000 1 CO
+Timestep 2760000 1 H
+Timestep 2761000 1 H
+Timestep 2762000 1 H
+Timestep 2763000 1 O
+Timestep 2764000 1 H
+Timestep 2765000 1 H
+Timestep 2773000 1 H
+Timestep 2776000 2 H
+Timestep 2777000 1 C2O
+Timestep 2780000 1 H
+Timestep 2781000 2 H
+Timestep 2782000 1 H
+Timestep 2783000 1 CH2
+Timestep 2786000 1 CO
+Timestep 2789000 1 CO
+Timestep 2790000 1 C3H
+Timestep 2793000 1 H
+Timestep 2794000 1 H
+Timestep 2798000 1 H
+Timestep 2799000 1 H2
+Timestep 2800000 1 H
+Timestep 2802000 2 H
+Timestep 2804000 1 H
+Timestep 2805000 1 H
+Timestep 2808000 1 H
+Timestep 2810000 1 H 1 C2H2 1 C3H 1 O
+Timestep 2811000 1 H
+Timestep 2813000 1 H
+Timestep 2814000 1 H
+Timestep 2818000 3 H
+Timestep 2819000 1 H
+Timestep 2821000 1 C
+Timestep 2822000 1 H
+Timestep 2826000 1 C
+Timestep 2827000 1 H
+Timestep 2829000 1 H
+Timestep 2832000 1 H 1 C2H2
+Timestep 2833000 1 CO 1 O
+Timestep 2834000 1 CO 1 H
+Timestep 2835000 1 H
+Timestep 2837000 1 H
+Timestep 2839000 1 H
+Timestep 2840000 1 O
+Timestep 2843000 2 H
+Timestep 2845000 2 H
+Timestep 2846000 2 H
+Timestep 2850000 1 H
+Timestep 2851000 1 CO
+Timestep 2852000 1 H
+Timestep 2854000 1 H
+Timestep 2855000 1 C2O
+Timestep 2856000 1 H
+Timestep 2857000 1 H
+Timestep 2858000 1 H
+Timestep 2860000 1 C2H 1 H
+Timestep 2862000 1 H
+Timestep 2863000 2 H
+Timestep 2865000 1 O 1 H2 1 H
+Timestep 2866000 1 H
+Timestep 2869000 4 H
+Timestep 2870000 1 CH2 1 H 1 C2H
+Timestep 2871000 1 H
+Timestep 2872000 1 CO
+Timestep 2873000 1 H
+Timestep 2878000 1 H
+Timestep 2879000 1 CO
+Timestep 2882000 1 CO 1 H
+Timestep 2888000 1 H
+Timestep 2889000 1 CH 1 H
+Timestep 2891000 1 H
+Timestep 2892000 2 H
+Timestep 2894000 1 H 1 CO
+Timestep 2895000 3 H
+Timestep 2896000 1 H
+Timestep 2899000 1 H
+Timestep 2900000 1 H
+Timestep 2902000 1 H
+Timestep 2909000 1 H
+Timestep 2910000 1 H
+Timestep 2911000 1 H 1 CH
+Timestep 2912000 1 H
+Timestep 2913000 1 H
+Timestep 2915000 1 H
+Timestep 2916000 1 H
+Timestep 2917000 1 H
+Timestep 2918000 1 C
+Timestep 2921000 1 H
+Timestep 2922000 1 CH2
+Timestep 2923000 3 H
+Timestep 2924000 1 H
+Timestep 2925000 1 H
+Timestep 2928000 1 H
+Timestep 2931000 1 C2H
+Timestep 2932000 1 H
+Timestep 2933000 1 H
+Timestep 2936000 1 C2H2
+Timestep 2937000 1 CO
+Timestep 2938000 1 H
+Timestep 2941000 1 CO
+Timestep 2942000 1 H
+Timestep 2943000 2 H
+Timestep 2947000 1 H
+Timestep 2948000 1 H
+Timestep 2952000 1 H
+Timestep 2953000 1 H
+Timestep 2956000 1 H
+Timestep 2957000 1 H
+Timestep 2962000 1 CO
+Timestep 2966000 1 O
+Timestep 2968000 2 H
+Timestep 2971000 1 H
+Timestep 2972000 1 CH2 1 H
+Timestep 2973000 1 H
+Timestep 2975000 1 CO
+Timestep 2978000 1 C3H
+Timestep 2979000 1 H
+Timestep 2983000 3 H 1 C2H2
+Timestep 2984000 1 H
+Timestep 2986000 1 H
+Timestep 2989000 2 H
+Timestep 2990000 1 H
+Timestep 2991000 1 CH 1 H
+Timestep 2994000 2 H 1 C2H3
+Timestep 2996000 1 O 1 H
+Timestep 2997000 1 H
+Timestep 2998000 1 H
+Timestep 2999000 2 H
+Timestep 3003000 1 H
+Timestep 3005000 1 H
+Timestep 3008000 1 H
+Timestep 3009000 2 H
+Timestep 3010000 1 O
+Timestep 3011000 1 H 1 C2H
+Timestep 3012000 1 H
+Timestep 3014000 1 H
+Timestep 3015000 1 C2O
+Timestep 3016000 1 CO
+Timestep 3017000 1 H
+Timestep 3022000 1 C
+Timestep 3025000 1 H
+Timestep 3028000 1 C2H2
+Timestep 3029000 2 H
+Timestep 3030000 1 H
+Timestep 3032000 2 H
+Timestep 3035000 1 H
+Timestep 3037000 1 H
+Timestep 3042000 1 H
+Timestep 3043000 2 H
+Timestep 3044000 2 H
+Timestep 3051000 1 H
+Timestep 3053000 2 H 1 CO
+Timestep 3059000 2 H
+Timestep 3061000 1 H
+Timestep 3062000 1 CO 1 H
+Timestep 3064000 1 H
+Timestep 3065000 2 H
+Timestep 3066000 3 H
+Timestep 3067000 2 H
+Timestep 3069000 1 H
+Timestep 3070000 1 H
+Timestep 3075000 1 H
+Timestep 3077000 1 H
+Timestep 3078000 1 HO 1 H
+Timestep 3079000 1 H 1 CO
+Timestep 3080000 2 H
+Timestep 3081000 1 H
+Timestep 3087000 2 H
+Timestep 3088000 2 H
+Timestep 3090000 1 C2HO
+Timestep 3092000 1 H
+Timestep 3093000 1 C3H3 1 H
+Timestep 3094000 1 H
+Timestep 3098000 2 H
+Timestep 3099000 1 H
+Timestep 3101000 1 H
+Timestep 3102000 1 H
+Timestep 3103000 1 H
+Timestep 3104000 1 H
+Timestep 3105000 1 O
+Timestep 3106000 2 H
+Timestep 3110000 2 H
+Timestep 3111000 1 C2H 2 CH
+Timestep 3112000 1 H
+Timestep 3114000 1 CH
+Timestep 3116000 1 H
+Timestep 3120000 2 H
+Timestep 3123000 1 H
+Timestep 3129000 1 H
+Timestep 3130000 1 H
+Timestep 3133000 2 H
+Timestep 3135000 2 H
+Timestep 3137000 1 H 1 CO
+Timestep 3140000 1 H
+Timestep 3142000 1 H
+Timestep 3144000 3 H
+Timestep 3145000 1 C3H2 1 H2
+Timestep 3149000 1 H
+Timestep 3150000 1 C2H2 1 H
+Timestep 3155000 1 H
+Timestep 3157000 1 CO
+Timestep 3160000 1 HO
+Timestep 3162000 2 H 1 CO
+Timestep 3165000 1 C
+Timestep 3167000 1 H 1 C2H2
+Timestep 3168000 1 H
+Timestep 3171000 1 H
+Timestep 3176000 1 O 1 H
+Timestep 3177000 2 H 1 C2
+Timestep 3179000 1 H
+Timestep 3180000 1 H
+Timestep 3181000 1 O
+Timestep 3182000 2 H
+Timestep 3185000 2 H
+Timestep 3186000 1 H
+Timestep 3190000 1 H
+Timestep 3192000 1 H
+Timestep 3193000 1 C3H
+Timestep 3196000 1 H
+Timestep 3197000 1 H
+Timestep 3198000 3 H
+Timestep 3199000 1 CO
+Timestep 3200000 1 H
+Timestep 3204000 1 H
+Timestep 3206000 2 H
+Timestep 3208000 2 H
+Timestep 3209000 1 H
+Timestep 3214000 1 C2H2 1 H
+Timestep 3216000 1 CO 1 H
+Timestep 3217000 1 H 1 CH
+Timestep 3222000 1 C2H
+Timestep 3224000 2 H
+Timestep 3228000 1 H
+Timestep 3235000 1 H
+Timestep 3236000 1 H
+Timestep 3237000 1 H
+Timestep 3245000 1 H 1 CH2
+Timestep 3246000 1 CO
+Timestep 3247000 1 H
+Timestep 3250000 2 H
+Timestep 3251000 1 H
+Timestep 3254000 1 H
+Timestep 3255000 2 H
+Timestep 3257000 1 CO
+Timestep 3259000 1 C2H
+Timestep 3262000 1 CO
+Timestep 3270000 1 H
+Timestep 3274000 1 H 1 C3H
+Timestep 3277000 2 H
+Timestep 3278000 1 H
+Timestep 3286000 2 H
+Timestep 3288000 1 C
+Timestep 3291000 3 H
+Timestep 3292000 1 H
+Timestep 3293000 1 H
+Timestep 3297000 1 H
+Timestep 3298000 1 H
+Timestep 3304000 1 H
+Timestep 3309000 1 C2
+Timestep 3311000 1 H
+Timestep 3316000 1 H 1 CO
+Timestep 3318000 1 H
+Timestep 3322000 1 H
+Timestep 3324000 1 H
+Timestep 3328000 1 H
+Timestep 3333000 2 H
+Timestep 3334000 1 CH 1 H
+Timestep 3344000 1 CO
+Timestep 3345000 2 H 1 C
+Timestep 3348000 1 CO
+Timestep 3349000 1 H
+Timestep 3351000 1 H
+Timestep 3353000 1 H
+Timestep 3354000 1 CO
+Timestep 3356000 1 H
+Timestep 3357000 1 H
+Timestep 3366000 1 H
+Timestep 3376000 1 H
+Timestep 3377000 1 O
+Timestep 3381000 1 H
+Timestep 3384000 1 H
+Timestep 3400000 1 H
+Timestep 3402000 2 H
+Timestep 3403000 4 H
+Timestep 3410000 3 H
+Timestep 3411000 1 H
+Timestep 3417000 1 CO 1 H2
+Timestep 3419000 1 H
+Timestep 3423000 1 C
+Timestep 3431000 1 C2H
+Timestep 3433000 1 C2H2
+Timestep 3436000 1 H
+Timestep 3445000 1 H
+Timestep 3446000 1 C2
+Timestep 3448000 1 H
+Timestep 3453000 1 H
+Timestep 3457000 1 C2H
+Timestep 3459000 1 H
+Timestep 3462000 1 C3 1 H
+Timestep 3464000 1 H
+Timestep 3465000 1 C2H
+Timestep 3473000 1 H
+Timestep 3476000 1 CO
+Timestep 3478000 1 H
+Timestep 3481000 1 H
+Timestep 3488000 1 H
+Timestep 3498000 1 H
+Timestep 3500000 1 H
+Timestep 3508000 1 H
+Timestep 3511000 1 H
+Timestep 3512000 1 C3H 1 H
+Timestep 3513000 1 H
+Timestep 3514000 2 H
+Timestep 3524000 1 H
+Timestep 3528000 1 H
+Timestep 3532000 1 H
+Timestep 3544000 2 H
+Timestep 3545000 1 H
+Timestep 3546000 1 C2H
+Timestep 3553000 1 CO
+Timestep 3554000 1 H
+Timestep 3568000 1 H
+Timestep 3569000 1 H
+Timestep 3570000 1 H
+Timestep 3576000 1 CO
+Timestep 3577000 1 CO
+Timestep 3578000 1 H
+Timestep 3583000 1 H
+Timestep 3584000 1 H
+Timestep 3591000 1 H
+Timestep 3602000 1 C2
+Timestep 3605000 1 H
+Timestep 3633000 1 H
+Timestep 3638000 1 C2H
+Timestep 3641000 1 C3
+Timestep 3643000 1 C2H
+Timestep 3645000 1 H
+Timestep 3647000 1 H
+Timestep 3663000 1 C2
+Timestep 3669000 1 C2H
+Timestep 3674000 1 C
+Timestep 3676000 1 H
+Timestep 3685000 1 H
+Timestep 3691000 1 C2H
+Timestep 3694000 1 C4H
+Timestep 3709000 1 C2H
+Timestep 3717000 1 H
+Timestep 3725000 1 C
+Timestep 3731000 1 C2H2
+Timestep 3741000 1 C3
+Timestep 3753000 1 H
+Timestep 3762000 1 H
+Timestep 3763000 1 H
+Timestep 3766000 1 H
+Timestep 3771000 1 C2
+Timestep 3779000 1 H
+Timestep 3787000 1 C3
+Timestep 3790000 1 C2H
+Timestep 3795000 1 H
+Timestep 3798000 1 C
+Timestep 3801000 1 H
+Timestep 3803000 1 H
+Timestep 3804000 2 H
+Timestep 3818000 1 C2H
+Timestep 3825000 1 H
+Timestep 3830000 1 H
+Timestep 3835000 1 C2H
+Timestep 3841000 1 C
+Timestep 3842000 1 C2
+Timestep 3844000 1 C4
+Timestep 3849000 1 H
+Timestep 3851000 1 C2H
+Timestep 3875000 1 H
+Timestep 3881000 1 C
+Timestep 3890000 1 H
+Timestep 3891000 1 C2
+Timestep 3896000 1 CO
+Timestep 3898000 1 C2
+Timestep 3905000 1 C 1 C2
+Timestep 3910000 1 C4
+Timestep 3929000 1 C
+Timestep 3954000 1 C2
+Timestep 3963000 1 H
+Timestep 3967000 1 C
+Timestep 3976000 1 C
+Timestep 3983000 1 C2
+Timestep 3988000 1 C3
+Timestep 3993000 1 C
+Timestep 3997000 1 C2
+Timestep 4001000 1 C
+Timestep 4003000 1 C2H
+Timestep 4019000 1 C
+Timestep 4024000 1 C
+Timestep 4040000 1 C3
+Timestep 4045000 1 C3H
+Timestep 4049000 1 C
+Timestep 4055000 1 C2
+Timestep 4062000 1 C
+Timestep 4066000 1 C2
+Timestep 4082000 1 H 1 C3
+Timestep 4083000 1 C
+Timestep 4100000 1 C2
+Timestep 4106000 1 C
+Timestep 4119000 1 C2H
+Timestep 4125000 1 C2
+Timestep 4138000 1 C2
+Timestep 4171000 1 C2
+Timestep 4180000 1 C2
+Timestep 4184000 1 C3
+Timestep 4202000 1 C4
+Timestep 4203000 1 C3
+Timestep 4205000 1 C2
+Timestep 4216000 1 C2
+Timestep 4232000 2 C2
+Timestep 4259000 1 C2
+Timestep 4266000 1 C2
+Timestep 4271000 1 C2
+Timestep 4275000 1 C2
+Timestep 4298000 1 C2
+Timestep 4300000 1 C2
+Timestep 4308000 1 C
+Timestep 4333000 1 C4
+Timestep 4336000 1 C2
+Timestep 4338000 1 C3
+Timestep 4339000 1 C
+Timestep 4347000 1 C
+Timestep 4350000 1 C
+Timestep 4351000 1 C
+Timestep 4370000 1 C
+Timestep 4372000 1 C2
+Timestep 4377000 1 C3
+Timestep 4378000 1 C3
+Timestep 4381000 1 C2 1 C3
+Timestep 4387000 1 C2
+Timestep 4391000 1 C2
+Timestep 4397000 1 C3
+Timestep 4400000 1 C2
+Timestep 4403000 1 C3
+Timestep 4406000 1 C3
+Timestep 4418000 1 C3
+Timestep 4419000 1 C3
+Timestep 4422000 1 C2
+Timestep 4431000 1 C2
+Timestep 4444000 1 C2
+Timestep 4455000 1 C4
+Timestep 4458000 1 C3
+Timestep 4470000 1 C2
+Timestep 4471000 1 C
+Timestep 4472000 1 C
+Timestep 4475000 1 C3 1 C2
+Timestep 4483000 1 C2
+Timestep 4484000 1 C2
+Timestep 4489000 1 C2
+Timestep 4494000 1 C
+Timestep 4497000 1 C2
+Timestep 4498000 1 C 1 C2
+Timestep 4506000 1 C2
+Timestep 4512000 1 C2
+Timestep 4516000 1 C3
+Timestep 4520000 1 C2
+Timestep 4523000 1 C2
+Timestep 4526000 1 C4
+Timestep 4527000 1 C4 1 C2
+Timestep 4532000 1 C3
+Timestep 4534000 1 C4
+Timestep 4536000 1 C2
+Timestep 4539000 1 C2
+Timestep 4546000 1 C
+Timestep 4555000 1 C4
+Timestep 4559000 2 C2
+Timestep 4563000 1 C2
+Timestep 4564000 1 C3
+Timestep 4567000 1 C2
+Timestep 4572000 1 C
+Timestep 4576000 1 C3
+Timestep 4579000 1 C2
+Timestep 4580000 1 C2
+Timestep 4585000 2 C2
+Timestep 4588000 1 C2 1 C4
+Timestep 4593000 1 C2
+Timestep 4594000 1 C2
+Timestep 4596000 1 C
+Timestep 4598000 1 C2
+Timestep 4600000 1 C2
+Timestep 4607000 1 C3
+Timestep 4610000 1 C
+Timestep 4611000 1 C2 1 C
+Timestep 4614000 1 C4
+Timestep 4615000 1 C2
+Timestep 4616000 1 C3
+Timestep 4617000 1 C2
+Timestep 4618000 1 C3
+Timestep 4620000 1 C2
+Timestep 4622000 1 C3
+Timestep 4626000 1 C
+Timestep 4629000 1 C2
+Timestep 4635000 1 C3
+Timestep 4638000 1 C2
+Timestep 4645000 1 C2
+Timestep 4648000 1 C4
+Timestep 4649000 1 C3
+Timestep 4651000 1 C2
+Timestep 4652000 1 C2
+Timestep 4654000 1 C2
+Timestep 4656000 1 C2
+Timestep 4657000 1 C3
+Timestep 4659000 2 C2
+Timestep 4660000 1 C3
+Timestep 4661000 1 C2
+Timestep 4662000 1 C4 1 C3
+Timestep 4664000 1 C2
+Timestep 4665000 1 C
+Timestep 4666000 1 C2
+Timestep 4671000 1 C4
+Timestep 4673000 2 C3
+Timestep 4677000 1 C3
+Timestep 4679000 1 C3
+Timestep 4684000 1 C2
+Timestep 4685000 1 C2
+Timestep 4686000 1 C3
+Timestep 4689000 1 C2
+Timestep 4691000 1 C2
+Timestep 4692000 2 C3 1 C2
+Timestep 4694000 1 C
+Timestep 4698000 1 C3

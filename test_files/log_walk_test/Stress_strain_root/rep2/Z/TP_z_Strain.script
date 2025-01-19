@@ -1,0 +1,105 @@
+#-------------------Input_variables------------------- credit for the this script goes to Matt Radue, 
+# dir 1 means x # dir 2 means y # dir 3 means z
+variable        dir equal 3 
+variable        replicate string 1
+variable        xld string 79.54
+
+variable        strain equal 0.10
+variable        strain_rate_s equal 2e8 # in 1/s
+variable        mytimestep equal 0.1
+
+variable        myid string tensile_TP_4k_H2O_bonded_rlxed_erate_2e8_r2
+variable        data string TP_4k_H2O_bonded_rlxed_r2.data
+#-------------------Calculated_variables-------------------
+timestep        ${mytimestep}
+variable        strain_rate_fs equal ${strain_rate_s}*1e-15 # in 1/fs
+variable        totaltime equal ${strain}/${strain_rate_fs} # total time in femtoseconds
+variable        steps equal ${totaltime}/dt
+variable        eeng equal time*${strain_rate_fs}
+variable        etrue equal ln(1+v_eeng)
+
+#-------------------Initialization-------------------
+units           real
+dimension       3
+boundary        p p p
+newton          on
+atom_style      full
+
+#-------------------Force_field-------------------
+label           start
+#bond_style      hybrid morse class2
+bond_style      class2
+angle_style     class2
+dihedral_style  class2
+improper_style  class2
+special_bonds   lj/coul 0 0 1
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check yes one 5000 page 100000
+
+kspace_style    pppm 1.0e-4
+pair_style      lj/class2/coul/long 12.0
+pair_modify     mix sixthpower
+
+read_data       ${data}
+
+#------------Initialization----------------------
+#fix             1 all nve/limit 0.1
+#run             20000 # 0.01ns = 10ps
+#write_data 	${myid}_initialization.data
+#unfix           1
+
+
+#-------------------Fixes-------------------
+velocity	    all create 298 4928459 dist gaussian
+if "${dir} == 1" then &
+  "fix          1 all npt temp 298 298 100 y 1 1 1000 z 1 1 1000" &
+  "fix          2 all deform 1 x erate ${strain_rate_fs}"
+
+if "${dir} == 2" then &
+  "fix          1 all npt temp 298 298 100 x 1 1 1000 z 1 1 1000" &
+  "fix          2 all deform 1 y erate ${strain_rate_fs}"
+
+if "${dir} == 3" then &
+  "fix          1 all npt temp 298 298 100 x 1 1 1000 y 1 1 1000" &
+  "fix          2 all deform 1 z erate ${strain_rate_fs}"
+
+#-------------------Calculate_strains-------------------
+variable        tmp equal lx
+variable        lx0 equal ${tmp}
+variable        tmp equal ly
+variable        ly0 equal ${tmp}
+variable        tmp equal lz
+variable        lz0 equal ${tmp}
+variable        eengx equal (lx-${lx0})/${lx0}
+variable        eengy equal (ly-${ly0})/${ly0}
+variable        eengz equal (lz-${lz0})/${lz0}
+variable        etruex equal ln(1+v_eengx)
+variable        etruey equal ln(1+v_eengy)
+variable        etruez equal ln(1+v_eengz)
+
+#-------------------Calculate_stresses-------------------
+compute        p all pressure 1_temp
+variable       sxx equal -0.101325*c_p[1] #in MPa   CONVERTS ATM to MPA
+variable       syy equal -0.101325*c_p[2] #in MPa
+variable       szz equal -0.101325*c_p[3] #in MPa
+fix            sxx_ave all ave/time 1 2000 2000 v_sxx
+fix            syy_ave all ave/time 1 2000 2000 v_syy
+fix            szz_ave all ave/time 1 2000 2000 v_szz
+
+
+#-------------------Outputs-------------------
+thermo         2000
+log            ${myid}.log.lammps
+thermo_style   custom step pe ke temp etotal evdwl press pxx pyy pzz v_etrue v_eengx v_eengy v_eengz v_sxx v_syy v_szz f_sxx_ave f_syy_ave &
+               f_szz_ave v_etruex v_etruey v_etruez lx ly lz v_dir vol density ebond eangle edihed eimp bonds angles dihedrals impropers
+restart        100000 rst1.a.${myid} rst2.a.${myid}
+dump           6 all atom 10000 dump.${myid} #every picosecond
+dump_modify    6 scale no sort id
+
+#-------------------Run-------------------
+timestep       ${mytimestep}
+run            ${steps}
+
+#-------------------Wrap up-------------------
+write_restart   ${myid}.restart
+write_data      ${myid}.data
