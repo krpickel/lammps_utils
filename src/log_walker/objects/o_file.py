@@ -10,62 +10,83 @@ This class is meant to be contain all of the data in an o file
 
 """
 
-import os
-
 import pandas as pd
 from src.log_walker.objects.log_file import LogFile
-from src.log_walker.utils.file_utils import DirFileUtils
 
 
 class OFile(LogFile):
 
-    sections: dict()
     errors: {}
+    sections: {}
+    dataSectionIDs: []
     warnings: {}
 
-    def ___init__(self, dirPath, name, uniqueID, extn):
-        self.dirPath = dirPath
-        self.name = name
-        self.uniqueID = uniqueID
-        self.extn = extn
+    def ___init__(dirPath, name, uniqueID, extn):
+        LogFile.__init__(dirPath, name, uniqueID, extn)
+        print("Here")
+        self.errors = {}
+        self.sections = {}
+        self.dataSectoionIDs = []
+        self.warnings = {}
 
         self.splitSections()
+        print()
 
     def splitSections():
         inDir = self.dirPath
         preDataHeaderLine = "Per MPI rank"
 
         headerNext = False
-        dataNext = False
         reactData = False
         inData = False
         inHeader = False
         sectType = None
         headerSec = None
+        headers = []
+        warningID = 0
+        errorID = 0
+        sectionID = 0
         with open(inDir + "/" + self.name + self.extn, "r") as file:
-
+            previousData = [-1]
             for line in file:
+                line = line.strip().split()
+                # if inHeader:
+                #    if headerSec == None:
+                #        headerSec = HeaderSection(0)
+                if inData:
+                    if previousData == [-1]:
+                        dataSect = DataSection(0)
+                        dataSect.setDataHeaders(line)
+                        headers = line
 
-                if inHeader:
-                    if headerSec == None:
-                        headerSec = HeaderSection(0)
+                    elif line[0] == previousData[0] or line == headers:
+                        dataSect.addDataRow(line)
+                    elif line[0] == "WARNING":
+                        self.warnings[warningID] = line
+                        warningID = +1
+                    elif line[0] == "ERROR":
+                        self.errore[errorID] = line
+                        errorID = +1
 
                 if "LAMMPS" in line:
+                    # TODO: capture meaningful header data
                     inHeader = True
-                    sectType = "header"
                 elif preDataHeaderLine in line:
                     inData = True
-                    sectType = "data"
 
                 if "Loop time" in line:
-                    dataNext = False
+                    inData = False
+                    previousData = [-1]
+                    self.sections[sectionID] = dataSect
 
                 line = line.strip().split()
 
                 if "WARNING" in line[0]:
-                    continue
+                    self.warnings[warningID] = line
+                    warningID = +1
                 elif "ERROR" in line[0]:
-                    continue
+                    self.errore[errorID] = line
+                    errorID = +1
 
 
 class Section:
@@ -73,15 +94,32 @@ class Section:
     uniqueID: int
     sectionType: str
 
+    def __init__(self, uniqueID, sectType):
+        self.uniqueID = uniqueID
+        self.sectionType = sectType
+
 
 class DataSection(Section):
 
-    headers: []
-    rows: {}
+    data: pd.DataFrame
+    headerOrder: {}
 
-    def __init__(self, uniqueID, sectionType):
-        self.uniqueID = uniqueID
-        self.sectionType = sectionType
+    def __init__(self, uniqueID):
+        Section.__init__(uniqueID, "data")
+        self.data = pd.DataFrame()
+        self.headerOrder = {}
+
+    @classmethod
+    def setDataHeaders(self, headers: []):
+        headerNum = 0
+        for header in headers:
+            self.headerOrder[header] = headerNum
+            self.data[header] = []
+            headerNum = +1
+
+    @classmethod
+    def addDataRow(self, row: []):
+        pd.concat(self.data, row)
 
 
 class SimBox:
@@ -110,8 +148,7 @@ class HeaderSection(Section):
     simBox: SimBox
 
     def __init__(self, uniqueID):
-        self.uniqueID = uniqueID
-        self.sectionType = "Header"
+        Section.__init__(uniqueID, "header")
 
         self.populateSection(self)
 

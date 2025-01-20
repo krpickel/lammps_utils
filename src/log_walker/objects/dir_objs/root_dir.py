@@ -10,31 +10,40 @@ This class is the highest level directory.
 
 """
 
-from pathlib import Path
-from src.log_walker.enums.data_file_indicators import DataFileIndicators
 from src.log_walker.objects.dir_objs.directory import Directory
+from src.log_walker.objects.dir_objs.rep_dir import ReplicateDirectory
 from src.log_walker.utils.file_utils import DirFileUtils
 
 
 class RootDirectory(Directory):
+    """
+    Description:
+        This class the top level directory of the analysis.
+    Variables:
+        dataDirs(array) - An array containing all of the data directories in the root
+                          directory that are not replicates
+        subDirs(array) - An array containing the subdirectory names
+        files(array) - An array containing all of the file names
+    """
 
+    dataDirs: []
     dataPresent: bool
+    repDir: ReplicateDirectory
     repPresent: bool
-    replicateDirs: {}
-    dataDirs: {}
 
     def __init__(self, path: str):
         """
         Constructor class
         """
         # Initialize the super class first
-        super().__init__(path)
+        Directory.__init__(path)
         self.dataDirs = {}
         self.repDirs = {}
-        self.dataPresent = DirFileUtils.isDataDir(self.path.__str__())
-        self.repPresent = DirFileUtils.isRepDir(self.path.__str__())
+        self.dataPresent = DirFileUtils.isDataDir(self.path)
+        self.repPresent = DirFileUtils.isRepDir(self.path)
 
-        self.setupDirectory(self.path)
+        self.setupRootDirectory()
 
-    def setupDirectory(self, rootPath: Path):
-        super().setupDirectory(rootPath)
+    def setupRootDirectory(self):
+        if self.repPresent:
+            self.repDir = ReplicateDirectory(self.path.__str__())

@@ -21,11 +21,15 @@ class DataFileIndicators(Enum):
 
     def isFileType(self, fileName):
         """
-        Description: returns true if the file name is the same type as the indicator
-                     otherwise returns false.
-                     e.g. DataFileIndicators.OFILE.isFileType(fileName)
-        Input: fileName(string) - The file name
-        Return: bool
+        Description:
+            returns true if the file name is the same type as the indicator
+            otherwise returns false.
+            e.g.
+                DataFileIndicators.OFILE.isFileType(fileName)
+        Input:
+            fileName(string) - The file name
+        Return:
+            bool
         """
 
         if self.value in fileName:
@@ -35,10 +39,13 @@ class DataFileIndicators(Enum):
     @classmethod
     def isDataFileinFiles(self, fileNames: []):
         """
-        Description: returns true if there is a data file in the group of files given
-                     otherwise returns false
-        Input: fileNames(Array) - An array of file names
-        Return: bool
+        Description:
+            returns true if there is a data file in the group of files given
+            otherwise returns false
+        Input:
+            fileNames(Array) - An array of file names
+        Return:
+            bool
         """
         for file in fileNames:
             if self.isDataFile(file):
@@ -48,10 +55,13 @@ class DataFileIndicators(Enum):
     @classmethod
     def isDataFile(self, fileName):
         """
-        Description: returns true if the file contains any of the string indicators in this enum
-                     otherwise returns false
-        Input: fileName(string) - The file name
-        Return: bool
+        Description:
+            returns true if the file contains any of the string indicators in this enum
+            otherwise returns false
+        Input:
+            fileName(string) - The file name
+        Return:
+            bool
         """
         for indicator in self:
             if indicator.value in fileName:
