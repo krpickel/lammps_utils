@@ -11,18 +11,19 @@ This class is meant to be the super class for repWalker and possibly other walke
 """
 
 import os
+
 import pathlib as Path
-
 from src.log_walker.enums.data_file_indicators import DataFileIndicators
-
-# from src.log_walker.objects.del_file import DelFile
+from src.log_walker.objects.dir_objs.root_dir import RootDirectory
 from src.log_walker.objects.o_file import OFile
 
 
+# from src.log_walker.objects.del_file import DelFile
 class LogWalker:
 
     inDir: str
     dataFiles: []
+    rootDir: RootDirectory
 
     def __init__(self, inDir: str):
         self.inDir = inDir

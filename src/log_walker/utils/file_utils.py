@@ -11,6 +11,8 @@ This class contains utility functions related to files and dirs
 """
 
 import os
+from pathlib import Path
+
 from src.log_walker.enums.data_file_indicators import DataFileIndicators
 
 
@@ -65,7 +67,7 @@ class DirFileUtils:
             return f
         return self.__openFile__(name, "w")
 
-    def isDir(path):
+    def isDir(path: str):
         return os.path.isdir(path)
 
     def openFile(name: str, parameter: str):
@@ -88,21 +90,22 @@ class DirFileUtils:
             print("Invalid Parameter")
             return 1 / 0
 
-    def isDataDir(path):
-        for fileNames in os.walk(path):
-            if fileNames.__len__() > 0:
-                if DataFileIndicators.isDataFileinFiles(fileNames):
-                    return True
+    def isDataDir(path: str):
+        path = Path(path)
+        fileNames = [file.name for file in path.iterdir() if file.is_file()]
+
+        if DataFileIndicators.isDataFileinFiles(fileNames):
+            return True
         return False
 
     @classmethod
-    def isRepDir(self, path):
+    def isRepDir(self, path: str):
         entities = os.listdir(path)
         replicateDirs = {}
         dirs = []
 
         for entity in entities:
-            if self.isDir(entity):
+            if self.isDir(path + "/" + entity):
                 dirs.append(entity)
 
         if dirs.__len__() > 1:
@@ -110,24 +113,32 @@ class DirFileUtils:
             for directory in dirs:
                 if directory[directory.__len__() - 1].isdigit():
                     repBaseName = self.getRepRoot(directory)
-                    replicateDirs[repBaseName].append(directory)
-                for temp in dirs:
-                    if directory == temp:
-                        continue
-                    elif repBaseName in temp and temp[temp.__len__() - 1].isdigit():
-                        repNum = self.getRepNum(temp)
-                        if repNum > 0:
-                            replicateDirs[repBaseName].append(temp)
+                    if repBaseName not in replicateDirs.keys():
+                        replicateDirs[repBaseName] = []
+                    if directory not in replicateDirs[repBaseName]:
+                        replicateDirs[repBaseName].append(directory)
+
+                    print(replicateDirs[repBaseName])
+                    for temp in dirs:
+                        if directory == temp:
+                            continue
+                        elif repBaseName in temp and temp[temp.__len__() - 1].isdigit():
+                            repNum = self.getRepNum(temp)
+                            if repNum > 0 and temp not in replicateDirs[repBaseName]:
+                                replicateDirs[repBaseName].append(temp)
         if replicateDirs.__len__() > 1:
             return True
         return False
 
+    @classmethod
     def getRepRoot(self, dictionary: str):
         return self.getRepRootAndNum(dictionary)[0]
 
+    @classmethod
     def getRepNum(self, dictionary: str):
         return self.getRepRootAndNum(dictionary)[1]
 
+    @classmethod
     def getRepRootAndNum(self, directory: str):
         endNum = "0"
         repBaseName = None
@@ -140,4 +151,4 @@ class DirFileUtils:
                 repBaseName = directory[: directory.__len__() - i + 1]
                 break
 
-        return repBaseName, int(endNum)
+        return str(repBaseName), int(endNum)
