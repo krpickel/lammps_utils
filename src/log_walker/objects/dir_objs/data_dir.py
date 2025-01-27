@@ -22,7 +22,7 @@ class DataDirectory(Directory):
     dataFiles: {}
 
     def __init__(self, path: str):
-        Directory.__init__(path)
+        super().__init__(path)
         self.dataFiles = {}
 
         self.setupDataDirectory()
@@ -44,6 +44,11 @@ class DataDirectory(Directory):
         uniqueID = fileName.split("sh.")[1]
         extn = "." + uniqueID
         oFile = OFile(file.parent.__str__(), fileName, uniqueID, extn)
+        self.dataFiles[uniqueID] = oFile
+        for sectionKey in oFile.sections.keys():
+            data = oFile.sections[sectionKey].data
+            print(data)
+
         print(oFile)
 
     def populateDelFile(self, file: Path):

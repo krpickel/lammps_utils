@@ -12,6 +12,9 @@ This class in an interface for all directory type objects
 
 from pathlib import Path
 
+from src.log_walker.enums.dir_type import DirType
+from src.log_walker.utils.file_utils import DirFileUtils
+
 
 class Directory(object):
     """
@@ -24,33 +27,46 @@ class Directory(object):
     """
 
     path: Path
+    subDirObjs: {}
     subDirs: []
     files: []
+    dataPresent: bool
+    repPresent: bool
+    strainPresent: bool
 
-    @classmethod
-    def __init__(self, path: str):
+    def __init__(self, path):
         """
         Constructor Method
         """
-        self.files = []
-        self.subDirs = []
-        # don't @me
-        self.path = Path(path)
+        path = DirFileUtils.getPathObj(path)
 
-        self.setupDirectory(self.path)
+        self.path = path
+        self.files = DirFileUtils.getFiles(path)
+        self.subDirs = DirFileUtils.getSubDirs(path)
+        self.subDirObjs = self.setupSubDirObjs()
+        self.dataPresent = DirFileUtils.isDataDir(path)
+        self.repPresent = DirFileUtils.isRepDir(path)
+        self.strainPresent = DirFileUtils.isStrainDir(path)
 
-    @classmethod
-    def setupDirectory(self, path: Path):
-        directories = []
-        files = []
-        for entity in path.iterdir():
-            if entity.is_dir():
-                directories.append(entity)
-            elif entity.is_file():
-                files.append(entity)
-            else:
-                print("unrecognized entity")
-        self.files = files
-        self.subDirs = directories
-        print(self.files)
-        print(self.subDirs)
+        self.setupDirectory()
+
+    def setupDirectory(self):
+        subDirs = self.subDirs
+
+        if len(subDirs) > 0:
+            for subDir in subDirs:
+                if (
+                    not DirFileUtils.isDataDir(subDir)
+                    and not DirFileUtils.isRepDir(subDir)
+                    and not DirFileUtils.isStrainDir(subDir)
+                ):
+
+                    self.subDirObjs[DirType.GENERAL.value].append(Directory(subDir))
+
+    def setupSubDirObjs(self):
+        subDirObjs = {}
+
+        for dirType in DirType:
+            subDirObjs[dirType.value] = []
+
+        return subDirObjs

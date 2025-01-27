@@ -33,14 +33,13 @@ from src.log_walker.log_walker import LogWalker
 from src.log_walker.objects.dir_objs.data_dir import DataDirectory
 from src.log_walker.objects.dir_objs.root_dir import RootDirectory
 from src.log_walker.objects.o_file import OFile
-from src.log_walker.utils.file_utils import DirFileUtils
-
 
 inDir = Path(
-    "C:\\Users\\asmon\\eclipse-workspace\\lammps_data_utils\\test_files\\oFiles\\Stress_Strain"
+    "C:\\Users\\asmon\\eclipse-workspace\\lammps_data_utils\\test_files\\oFiles"
 )
 
-# dataDir = DataDirectory(inDir.__str__())
+inDir2 = "C:\\Users\\asmon\\eclipse-workspace\\lammps_data_utils\\test_files\\oFiles"
 
-oFile = OFile(inDir.__str__(), "x_Strain.script.sh.o177356", "o177356", ".o177356")
+rootDir = RootDirectory(inDir)
 print()
+# dataDir = DataDirectory(inDir.__str__())

@@ -10,8 +10,11 @@ This class is the highest level directory.
 
 """
 
+from src.log_walker.enums.dir_type import DirType
+from src.log_walker.objects.dir_objs.data_dir import DataDirectory
 from src.log_walker.objects.dir_objs.directory import Directory
 from src.log_walker.objects.dir_objs.rep_dir import ReplicateDirectory
+from src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
 from src.log_walker.utils.file_utils import DirFileUtils
 
 
@@ -27,23 +30,36 @@ class RootDirectory(Directory):
     """
 
     dataDirs: []
-    dataPresent: bool
+    dataDir: DataDirectory
     repDir: ReplicateDirectory
-    repPresent: bool
+    strainDirs: []
+    subRepDirs: []
 
     def __init__(self, path: str):
         """
         Constructor class
         """
         # Initialize the super class first
-        Directory.__init__(path)
-        self.dataDirs = {}
-        self.repDirs = {}
-        self.dataPresent = DirFileUtils.isDataDir(self.path)
-        self.repPresent = DirFileUtils.isRepDir(self.path)
+        super().__init__(path)
+        self.dataDirs = []
+        self.subRepDirs = []
+        self.strainDirs = []
+
+        if self.repPresent:
+            self.repDir = ReplicateDirectory(self.path)
+        if self.dataPresent:
+            self.dataDir = DataDirectory(self.path)
 
         self.setupRootDirectory()
 
     def setupRootDirectory(self):
-        if self.repPresent:
-            self.repDir = ReplicateDirectory(self.path.__str__())
+        subDirObjs = self.subDirObjs
+        for subDir in self.subDirs:
+            if DirFileUtils.isDataDir(subDir):
+                subDirObjs[DirType.DATA.value].append(DataDirectory(subDir))
+            elif DirFileUtils.isRepDir(subDir):
+                subDirObjs[DirType.REP.value].append(ReplicateDirectory(subDir))
+            elif DirFileUtils.isStrainDir(subDir):
+                subDirObjs[DirType.STRAIN.value].append(StrainDirectory(subDir))
+            else:
+                pass

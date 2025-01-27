@@ -10,7 +10,11 @@ This class represents a directory with replicate directories in it.  It shouldn'
 
 """
 
+import copy
+
+from src.log_walker.objects.dir_objs.data_dir import DataDirectory
 from src.log_walker.objects.dir_objs.directory import Directory
+from src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
 from src.log_walker.utils.file_utils import DirFileUtils
 
 
@@ -19,12 +23,29 @@ class ReplicateDirectory(Directory):
     replicateDirs: {}
     replicateDataDirs: {}
 
-    def __init__(self, path: str):
-        Directory.__init__(path)
+    def __init__(self, path):
+        super().__init__(path)
         self.replicateDirs = {}
 
+        self.replicateDirs, self.replicateDataDirs = self.setupRepDirectory()
+
     def setupRepDirectory(self):
-        self.replicateDirs = DirFileUtils.getRepDirs(self.path)
+        replicateDirs = DirFileUtils.getRepDirs(self.path)
+        replicateDataDirs = {}
+
+        for key in replicateDirs.keys():
+            repDataDirs = []
+            for repDir in replicateDirs[key]:
+                if DirFileUtils.isDataDir(repDir):
+                    repDataDirs.append(DataDirectory(repDir))
+                elif DirFileUtils.isStrainDir(repDir):
+                    repDataDirs.append(StrainDirectory)
+                else:
+                    pass
+
+            replicateDataDirs[key] = copy.deepcopy(repDataDirs)
+
+        return replicateDirs, replicateDataDirs
 
     def getRepBaseNames(self):
         """

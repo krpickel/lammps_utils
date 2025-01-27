@@ -11,7 +11,7 @@ This class is meant to be the super class for oFile, delFile and possibly other 
 """
 
 
-class LogFile:
+class LogFile(object):
 
     name: str
     extn: str
@@ -24,5 +24,5 @@ class LogFile:
         self.uniqueID = uniqueID
         self.extn = extn
 
-    # @staticmethod
-    # def populate():
+    def getFullFilePath(self):
+        return self.dirPath + "\\" + self.name

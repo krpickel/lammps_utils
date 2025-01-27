@@ -16,5 +16,6 @@ from enum import Enum, auto
 class DirType(Enum):
 
     DATA = auto()
-    ROOT = auto()
+    GENERAL = auto()
     REP = auto()
+    STRAIN = auto()
