@@ -5,3 +5,5 @@ objects/__pycache__/
 /__pycache__/
 *.pyc
 test_files/
+.idea/
+.settings/

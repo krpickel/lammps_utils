@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import csv
 import pandas as pd
 import time
-from src.objects.ClusterDeleted import ClusterDeleted
+from util_src.objects.ClusterDeleted import ClusterDeleted
 
 
 def read_o_file(inDir, outDir):

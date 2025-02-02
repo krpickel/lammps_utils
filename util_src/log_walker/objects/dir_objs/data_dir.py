@@ -12,13 +12,12 @@ This class represents a directory with data in it.  It shouldn't have any replic
 
 from pathlib import Path
 
-from src.log_walker.enums.data_file_indicators import DataFileIndicators
-from src.log_walker.objects.dir_objs.directory import Directory
-from src.log_walker.objects.o_file import OFile
+from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
+from util_src.log_walker.objects.dir_objs.directory import Directory
+from util_src.log_walker.objects.file.o_file import OFile
 
 
 class DataDirectory(Directory):
-
     dataFiles: {}
 
     def __init__(self, path: str):
@@ -45,11 +44,6 @@ class DataDirectory(Directory):
         extn = "." + uniqueID
         oFile = OFile(file.parent.__str__(), fileName, uniqueID, extn)
         self.dataFiles[uniqueID] = oFile
-        for sectionKey in oFile.sections.keys():
-            data = oFile.sections[sectionKey].data
-            print(data)
-
-        print(oFile)
 
     def populateDelFile(self, file: Path):
         pass

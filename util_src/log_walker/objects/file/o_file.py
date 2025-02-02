@@ -13,7 +13,8 @@ This class is meant to be contain all of the data in an o file
 import copy
 
 import pandas as pd
-from src.log_walker.objects.log_file import LogFile
+from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
+from util_src.log_walker.objects.file.log_file import LogFile
 
 
 class OFile(LogFile):
@@ -21,26 +22,28 @@ class OFile(LogFile):
     errors: {}
     sections: {}
     dataSectionIDs: []
+    type: DataFileIndicators
     warnings: {}
 
     def __init__(self, dirPath, name, uniqueID, extn):
         super().__init__(dirPath, name, uniqueID, extn)
+
+        self.dataSectoionIDs = []
         self.errors = {}
         self.sections = {}
-        self.dataSectoionIDs = []
         self.warnings = {}
+        self.type = DataFileIndicators.OFILE
 
         self.splitSections()
 
     def splitSections(self):
-        preDataHeaderLine = "Per MPI rank"
 
+        # alphabetize
+        preDataHeaderLine = "Per MPI rank"
         headerNext = False
-        reactData = False
         inData = False
         dataSect = None
         inHeader = False
-        sectType = None
         headerSec = None
         headers = []
         warningID = 0
@@ -48,7 +51,6 @@ class OFile(LogFile):
         sectionID = 1
 
         with open(self.getFullFilePath(), "r") as file:
-            print(file)
             previousData = pd.DataFrame()
             for line in file:
                 # if inHeader:
@@ -57,8 +59,6 @@ class OFile(LogFile):
                 if line.strip() != "" and not line == None:
                     if inData:
                         line = line.strip().split()
-                        if not previousData.empty:
-                            something = previousData.iloc[0]
                         if previousData.empty:
                             if headers != line:
                                 dataSect = DataSection(sectionID)
@@ -102,6 +102,9 @@ class OFile(LogFile):
                     elif "ERROR" in line[0]:
                         self.errors[errorID] = line
                         errorID = +1
+
+    def getType(self):
+        return self.type
 
 
 class Section(object):
@@ -147,7 +150,7 @@ class SimBox:
 
     def __init__(self, line):
 
-        print(line)
+        pass
 
 
 class HeaderSection(Section):

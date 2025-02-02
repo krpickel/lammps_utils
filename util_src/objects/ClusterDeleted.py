@@ -12,7 +12,7 @@ This file contains the object for holding data from a row in a del file generate
 """
 
 # Needed for values related to elements from the periodic table
-from src.objects.Elements import Elements
+from util_src.objects.Elements import Elements
 
 
 """

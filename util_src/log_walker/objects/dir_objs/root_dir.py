@@ -10,12 +10,12 @@ This class is the highest level directory.
 
 """
 
-from src.log_walker.enums.dir_type import DirType
-from src.log_walker.objects.dir_objs.data_dir import DataDirectory
-from src.log_walker.objects.dir_objs.directory import Directory
-from src.log_walker.objects.dir_objs.rep_dir import ReplicateDirectory
-from src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
-from src.log_walker.utils.file_utils import DirFileUtils
+from util_src.log_walker.enums.dir_type import DirType
+from util_src.log_walker.objects.dir_objs.data_dir import DataDirectory
+from util_src.log_walker.objects.dir_objs.directory import Directory
+from util_src.log_walker.objects.dir_objs.rep_dir import ReplicateDirectory
+from util_src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
+from util_src.log_walker.utils.file_utils import DirFileUtils
 
 
 class RootDirectory(Directory):
@@ -29,11 +29,8 @@ class RootDirectory(Directory):
         files(array) - An array containing all of the file names
     """
 
-    dataDirs: []
     dataDir: DataDirectory
     repDir: ReplicateDirectory
-    strainDirs: []
-    subRepDirs: []
 
     def __init__(self, path: str):
         """
@@ -63,3 +60,19 @@ class RootDirectory(Directory):
                 subDirObjs[DirType.STRAIN.value].append(StrainDirectory(subDir))
             else:
                 pass
+
+    def getAllDirObjs(self):
+
+        return self.subDirObjs
+
+    def getDataDirObjs(self):
+
+        return self.subDirObjs[DirType.DATA.value]
+
+    def getRepDirObjs(self):
+
+        return self.subDirObjs[DirType.REP.value]
+
+    def getStrainDirObjs(self):
+
+        return self.subDirObjs[DirType.STRAIN.value]

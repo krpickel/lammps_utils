@@ -2,7 +2,7 @@ from objects import read_lammps_output as rd
 import matplotlib.pyplot as plt
 import sys
 
-sys.path.append('C:/Users/asmon/mol_dyn/LUNAR/src')
+sys.path.append('C:/Users/asmon/mol_dyn/LUNAR/util_src')
 
 inDir = 'C:/Users/asmon/mol_dyn/research/Phenolic_Resin/TP_Reax/4k/H2O/pyro/rep1'
 outDir = inDir + '/analysis/'

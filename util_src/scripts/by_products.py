@@ -1,11 +1,10 @@
 import dataframe_image as dfi
 import matplotlib.pyplot as plt
 import pandas as pd
-from src.objects import read_lammps_output as rd
-from src.objects.DeletedClusterMassPercentOverTime import (
+from util_src.objects import read_lammps_output as rd
+from util_src.objects.DeletedClusterMassPercentOverTime import (
     DeletedClusterMassPercentOverTime,
 )
-
 
 inDir = "C:/Users/asmon/mol_dyn/research/Phenolic_Resin/TP_Reax/4k/H2O/pyro/low_mass_del/rep1"
 outDir = inDir + "/analysis/"
@@ -37,12 +36,17 @@ deletedClusterMassPercentageOverTime = {}
 nameColStr = "Name"
 totalMassStr = "Total Mass (amu)"
 massPercent = "Mass Percentage (%)"
+
 clusterTable = pd.DataFrame({nameColStr: [], totalMassStr: [], massPercent: []})
 for clusterName in deletedClusterSet:
-    deletedClusterWeightTotals[clusterName] = 0
 
+    deletedClusterWeightTotals[clusterName] = 0
     deletedClusterMassPercentageOverTime[clusterName] = []
+
     for timestep in delTimesteps:
+        # the data goes all the way to 5000K in some files, so we want to
+        # only grab up to 3200K which is the 2,900,000 timestep.
+        # Can be modified to change the temperature range
         if int(timestep) <= 2900000:
             for cluster in delTimesteps[timestep]:
                 if cluster.clusterStr == clusterName:

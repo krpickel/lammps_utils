@@ -12,6 +12,9 @@ This class is meant to be the super class for oFile, delFile and possibly other 
 
 
 class LogFile(object):
+    """
+    TODO: update this to just hold the pathlib.Path object and extract everything else from the Path object
+    """
 
     name: str
     extn: str

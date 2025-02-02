@@ -12,8 +12,8 @@ This class contains utility functions related to files and dirs
 
 import os
 from pathlib import Path
-from src.log_walker.enums.data_file_indicators import DataFileIndicators
-from src.log_walker.enums.strain_direction import StrainDirection
+from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
+from util_src.log_walker.enums.strain_direction import StrainDirection
 
 
 class DirFileUtils(object):
@@ -168,6 +168,17 @@ class DirFileUtils(object):
                             repNum = cls.getRepNum(temp)
                             if repNum > 0 and temp not in replicateDirs[repBaseName]:
                                 replicateDirs[repBaseName].append(temp)
+
+        # If you try to remove a key from a dictionary while iterating over it
+        # it causes an error so use a second for loop after figuring out which keys only hold
+        # one directory.s
+        popKeys = []
+        for key in replicateDirs.keys():
+            if not len(replicateDirs[key]) > 1:
+                popKeys.append(key)
+        if len(popKeys) > 0:
+            for popKey in popKeys:
+                replicateDirs.pop(popKey, None)
         return replicateDirs
 
     @classmethod

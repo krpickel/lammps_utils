@@ -2,7 +2,7 @@
 """
 @author: Keith Pickelmann
 Revision 1.0
-November 12th, 2024
+January 15th, 2024
 Michigan Technological University
 1400 Townsend Dr.
 Houghton, MI 49931
@@ -17,8 +17,10 @@ desc:  Contains values like weight and name.  Could be expanded to hold more ele
 
 current elements: C, H, O
 """
+
+
 class Elements(Enum):
-    
+
     C = 12.011
     H = 1.008
     O = 15.999

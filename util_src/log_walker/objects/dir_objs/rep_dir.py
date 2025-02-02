@@ -12,16 +12,16 @@ This class represents a directory with replicate directories in it.  It shouldn'
 
 import copy
 
-from src.log_walker.objects.dir_objs.data_dir import DataDirectory
-from src.log_walker.objects.dir_objs.directory import Directory
-from src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
-from src.log_walker.utils.file_utils import DirFileUtils
+from util_src.log_walker.objects.dir_objs.data_dir import DataDirectory
+from util_src.log_walker.objects.dir_objs.directory import Directory
+from util_src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
+from util_src.log_walker.utils.file_utils import DirFileUtils
 
 
 class ReplicateDirectory(Directory):
-
     replicateDirs: {}
     replicateDataDirs: {}
+    type: str
 
     def __init__(self, path):
         super().__init__(path)
@@ -37,8 +37,10 @@ class ReplicateDirectory(Directory):
             repDataDirs = []
             for repDir in replicateDirs[key]:
                 if DirFileUtils.isDataDir(repDir):
+                    self.type = "data"
                     repDataDirs.append(DataDirectory(repDir))
                 elif DirFileUtils.isStrainDir(repDir):
+                    self.type = "strain"
                     repDataDirs.append(StrainDirectory)
                 else:
                     pass

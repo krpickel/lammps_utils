@@ -15,7 +15,7 @@ from pathlib import Path
 
 
 class StrainDirection(Enum):
-
+    XYZ = "xyz"  # to handle when we want to average the x, y, and z directions
     X = "x"
     Y = "y"
     Z = "z"
@@ -35,7 +35,7 @@ class StrainDirection(Enum):
             string - An alphabetized string of the directions found in the sub directories
         """
 
-        directionString = ""
+        directionDirs = []
         xString = cls.X.value
         yString = cls.Y.value
         zString = cls.Z.value
@@ -43,12 +43,15 @@ class StrainDirection(Enum):
         for subDir in subDirs:
             lowerSubDir = subDir.name.lower()
             if xString == lowerSubDir:
-                directionString += xString
+                directionDirs.append(subDir)
             elif yString == lowerSubDir:
-                directionString += yString
+                directionDirs.append(subDir)
             elif zString == lowerSubDir:
-                directionString += zString
-        return sorted(directionString).__str__()
+                directionDirs.append(subDir)
+
+        directionDirs.sort()
+
+        return directionDirs
 
     @classmethod
     def isStrainRootDir(cls, path: Path):
@@ -64,8 +67,8 @@ class StrainDirection(Enum):
         for entity in path.iterdir():
             if entity.is_dir():
                 subDirs.append(entity)
-        directionString = cls.getDirectionStringFromSubDirs(subDirs)
+        directionDirs = cls.getDirectionStringFromSubDirs(subDirs)
 
-        if directionString == "":
+        if not directionDirs:
             return False
         return True
