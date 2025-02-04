@@ -14,7 +14,7 @@ from pathlib import Path
 
 from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
 from util_src.log_walker.objects.dir_objs.directory import Directory
-from util_src.log_walker.objects.file.o_file import OFile
+from util_src.log_walker.objects.file_objs.o_file import OFile
 
 
 class DataDirectory(Directory):

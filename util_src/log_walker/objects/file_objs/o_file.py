@@ -6,19 +6,19 @@ Michigan Technological University
 1400 Townsend Dr.
 Houghton, MI 49931
 
-This class is meant to be contain all of the data in an o file
+This class is meant to be contain all of the data in an o file_objs
 
 """
 
 import copy
 
 import pandas as pd
+
 from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
-from util_src.log_walker.objects.file.log_file import LogFile
+from util_src.log_walker.objects.file_objs.log_file import LogFile
 
 
 class OFile(LogFile):
-
     errors: {}
     sections: {}
     dataSectionIDs: []
@@ -34,11 +34,13 @@ class OFile(LogFile):
         self.warnings = {}
         self.type = DataFileIndicators.OFILE
 
+        print("Reading o file: " + uniqueID)
         self.splitSections()
+        print("Done reading: " + uniqueID)
 
     def splitSections(self):
 
-        # alphabetize
+        # TODO: alphabetize
         preDataHeaderLine = "Per MPI rank"
         headerNext = False
         inData = False
@@ -85,7 +87,7 @@ class OFile(LogFile):
                             # previousData.iloc[0].iloc[0] gets the first value in the first column
                             # not the cleanest but it works
                         elif (
-                            line[0] != previousData.iloc[0].iloc[0] and line != headers
+                                line[0] != previousData.iloc[0].iloc[0] and line != headers
                         ):
                             dataSect.addDataRow(line)
                             previousData = pd.DataFrame(line)
@@ -108,7 +110,6 @@ class OFile(LogFile):
 
 
 class Section(object):
-
     uniqueID: int
     sectionType: str
 
@@ -118,7 +119,6 @@ class Section(object):
 
 
 class DataSection(Section):
-
     data: pd.DataFrame
     headerOrder: {}
 
@@ -139,7 +139,6 @@ class DataSection(Section):
 
 
 class SimBox:
-
     boxType: str
     posX: int
     negX: int
@@ -149,12 +148,10 @@ class SimBox:
     negZ: int
 
     def __init__(self, line):
-
         pass
 
 
 class HeaderSection(Section):
-
     headerAtoms: int
     velocities: int
     bonds: int

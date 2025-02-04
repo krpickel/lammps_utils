@@ -27,7 +27,7 @@ class Directory(object):
     """
 
     path: Path
-    analysisPath: Path
+    analysis_path: Path
     subDirObjs: {}
     subDirs: []
     files: []
@@ -75,8 +75,8 @@ class Directory(object):
 
         return subDirObjs
 
-    def createAnalysisDir(self):
+    def create_analysis_dir(self):
         # This is the correct way to append to a Path object
         path = self.path / "analysis"
         path.mkdir(exist_ok=True)
-        self.analysisPath = path
+        self.analysis_path = path

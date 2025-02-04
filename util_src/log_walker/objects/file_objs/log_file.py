@@ -6,7 +6,7 @@ Michigan Technological University
 1400 Townsend Dr.
 Houghton, MI 49931
 
-This class is meant to be the super class for oFile, delFile and possibly other log file classes
+This class is meant to be the super class for oFile, delFile and possibly other log file_objs classes
 
 """
 

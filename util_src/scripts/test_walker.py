@@ -18,7 +18,7 @@ inDir = Path("C:\\Users\\asmon\\mol_dyn\\lammps_data_utils\\test_files\\oFiles\\
 
 anlyzer = StrainAnalyzer(inDir)
 
-anlyzer.plotEverything()
+anlyzer.plot_everything()
 
 # inDir = Path(
 #    "C:\\Users\\asmon\\eclipse-workspace\\lammps_data_utils\\test_files\\oFiles\\Stress_Strain"

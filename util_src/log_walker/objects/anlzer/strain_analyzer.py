@@ -19,7 +19,6 @@ from matplotlib import pyplot as plt
 from pandas.core.frame import DataFrame
 
 # Import local libs
-from src.log_analysis.main import analysis as LUNARLogAnalysis
 from util_src.log_walker.enums.data_cols import DataColumns
 from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
 from util_src.log_walker.enums.strain_direction import StrainDirection
@@ -27,203 +26,310 @@ from util_src.log_walker.objects.anlzer.analizer import Analyzer
 from util_src.log_walker.objects.dir_objs.data_dir import DataDirectory
 from util_src.log_walker.objects.dir_objs.directory import Directory
 from util_src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
+from util_src.log_walker.utils.lunar_utils import LUNARUtils
 
 
 class StrainAnalyzer(Analyzer):
     # Setup variables for object
-    strainDir: StrainDirectory
-    xDir: DataDirectory
-    yDir: DataDirectory
-    zDir: DataDirectory
-    xDirUniqueID: str
-    yDirUniqueID: str
-    zDirUniqueID: str
-    xStrainSectionData: DataFrame
-    yStrainSectionData: DataFrame
-    zStrainSectionData: DataFrame
+    strain_dir: StrainDirectory
+    x_dir: DataDirectory
+    y_dir: DataDirectory
+    z_dir: DataDirectory
+    x_dir_elastic_mod: float
+    y_dir_elastic_mod: float
+    z_dir_elastic_mod: float
+    xyz_elastic_mod: float
+    x_dir_yield_strength: float
+    y_dir_yield_strength: float
+    z_dir_yield_strength: float
+    xyz_yield_strength: float
+    x_dir_unique_id: str
+    y_dir_unique_id: str
+    z_dir_unique_id: str
+    x_strain_section_data: DataFrame
+    y_strain_section_data: DataFrame
+    z_strain_section_data: DataFrame
 
-    def __init__(self, path: Path):
-        """ """
+    def __init__(self, path):
+        """
+        Constructor
+        """
         super().__init__()
+        strain_dir = None
+        if isinstance(path, Path):
+            strain_dir = StrainDirectory(path)
+        elif isinstance(path, StrainDirectory):
+            strain_dir = path
+        else:
+            print("Incorrect input.  Input must be a pathlib.Path or a StrainDirectory obj")
+            raise Exception
 
-        self.strainDir = StrainDirectory(path)
-        self.xDir = self.strainDir.getXDataDir()
-        self.yDir = self.strainDir.getYDataDir()
-        self.zDir = self.strainDir.getZDataDir()
+        self.strain_dir = strain_dir
+        self.x_dir = strain_dir.getXDataDir()
+        self.y_dir = strain_dir.getYDataDir()
+        self.z_dir = strain_dir.getZDataDir()
 
-        self.strainDir.createAnalysisDir()
-        self.xDir.createAnalysisDir()
-        self.yDir.createAnalysisDir()
-        self.zDir.createAnalysisDir()
+        self.strain_dir.create_analysis_dir()
+        self.x_dir.create_analysis_dir()
+        self.y_dir.create_analysis_dir()
+        self.z_dir.create_analysis_dir()
 
-        self.setupRelevantData()
+        self.x_dir_elastic_mod = 0.0
+        self.y_dir_elastic_mod = 0.0
+        self.z_dir_elastic_mod = 0.0
+        self.xyz_elastic_mod = 0.0
+
+        self.x_dir_yield_strength = 0.0
+        self.y_dir_yield_strength = 0.0
+        self.z_dir_yield_strength = 0.0
+        self.xyz_yield_strength = 0.0
+
+        self.setup_relevant_data()
+
+    def setup_relevant_data(self):
+        strainDirs = [self.x_dir, self.y_dir, self.z_dir]
+
+        for dataDir in strainDirs:
+            for key in dataDir.dataFiles.keys():
+
+                file = dataDir.dataFiles[key]
+                if file.getType() != DataFileIndicators.OFILE:
+                    print("Not an o file_objs, can't analyze")
+                    break
+                for sectKey in file.sections.keys():
+                    section = file.sections[sectKey]
+                    # section.data is already a DataFrame but this is a more explicit way
+                    # of showing that.  It also lets IDEs autocomplete easier
+                    data = DataFrame(section.data)
+
+                    if DataColumns.X_STRAIN.value in data.columns:
+                        if dataDir.path.name.lower() == StrainDirection.X.value:
+                            self.x_strain_section_data = data
+                            self.x_dir_unique_id = key
+                        elif dataDir.path.name.lower() == StrainDirection.Y.value:
+                            self.y_strain_section_data = data
+                            self.y_dir_unique_id = key
+                        elif dataDir.path.name.lower() == StrainDirection.Z.value:
+                            self.z_strain_section_data = data
+                            self.z_dir_unique_id = key
 
     """
     Start Plotters
     """
 
-    def plotXDirXData(self):
+    def plot_x_dir_x_data(self):
 
-        xFile = self.getFilePath(
-            StrainDirection.X.value, self.xDir.analysisPath, self.xDirUniqueID
+        x_file = self.get_file_path(
+            StrainDirection.X.value, self.x_dir.analysis_path, self.x_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getXDirXStrain(), self.getXDirXStress(), StrainDirection.X.value, xFile
+        plot = self.plot_stress_strain_data(
+            self.get_x_dir_x_strain(), self.get_x_dir_x_stress(), StrainDirection.X.value, x_file
         )
-        self.savePlot(plot, self.xDir, StrainDirection.X.value, self.xDirUniqueID)
+        self.save_plot(plot, self.x_dir, StrainDirection.X.value, self.x_dir_unique_id)
 
-    def plotXDirYData(self):
+    def plot_x_dir_y_data(self):
 
-        yFile = self.getFilePath(
-            StrainDirection.Y.value, self.xDir.analysisPath, self.xDirUniqueID
-        )
-
-        plot = self.plotStressStrainData(
-            self.getXDirYStrain(), self.getXDirYStress(), StrainDirection.Y.value, yFile
-        )
-        self.savePlot(plot, self.xDir, StrainDirection.Y.value, self.xDirUniqueID)
-
-    def plotXDirZData(self):
-
-        zFile = self.getFilePath(
-            StrainDirection.Z.value, self.xDir.analysisPath, self.xDirUniqueID
+        y_file = self.get_file_path(
+            StrainDirection.Y.value, self.x_dir.analysis_path, self.x_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getXDirZStrain(), self.getXDirZStress(), StrainDirection.Z.value, zFile
+        plot = self.plot_stress_strain_data(
+            self.get_x_dir_y_strain(), self.get_x_dir_y_stress(), StrainDirection.Y.value, y_file
         )
-        self.savePlot(plot, self.xDir, StrainDirection.Z.value, self.xDirUniqueID)
+        self.save_plot(plot, self.x_dir, StrainDirection.Y.value, self.x_dir_unique_id)
+
+    def plot_x_dir_z_data(self):
+
+        z_file = self.get_file_path(
+            StrainDirection.Z.value, self.x_dir.analysis_path, self.x_dir_unique_id
+        )
+
+        plot = self.plot_stress_strain_data(
+            self.get_x_dir_z_strain(), self.get_x_dir_z_stress(), StrainDirection.Z.value, z_file
+        )
+        self.save_plot(plot, self.x_dir, StrainDirection.Z.value, self.x_dir_unique_id)
 
     """
     End X Directory Plotters
     """
 
-    def plotYDirXData(self):
+    def plot_y_dir_x_data(self):
 
-        xFile = self.getFilePath(
-            StrainDirection.X.value, self.yDir.analysisPath, self.yDirUniqueID
+        x_file = self.get_file_path(
+            StrainDirection.X.value, self.y_dir.analysis_path, self.y_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getYDirXStrain(), self.getYDirXStress(), StrainDirection.X.value, xFile
+        plot = self.plot_stress_strain_data(
+            self.get_y_dir_x_strain(), self.getYDirXStress(), StrainDirection.X.value, x_file
         )
-        self.savePlot(plot, self.yDir, StrainDirection.X.value, self.yDirUniqueID)
+        self.save_plot(plot, self.y_dir, StrainDirection.X.value, self.y_dir_unique_id)
 
-    def plotYDirYData(self):
+    def plot_y_dir_y_data(self):
 
-        yFile = self.getFilePath(
-            StrainDirection.Y.value, self.yDir.analysisPath, self.yDirUniqueID
-        )
-
-        plot = self.plotStressStrainData(
-            self.getYDirYStrain(), self.getYDirYStress(), StrainDirection.Y.value, yFile
-        )
-        self.savePlot(plot, self.yDir, StrainDirection.Y.value, self.yDirUniqueID)
-
-    def plotYDirZData(self):
-
-        zFile = self.getFilePath(
-            StrainDirection.Z.value, self.yDir.analysisPath, self.yDirUniqueID
+        y_file = self.get_file_path(
+            StrainDirection.Y.value, self.y_dir.analysis_path, self.y_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getYDirZStrain(), self.getYDirZStress(), StrainDirection.Z.value, zFile
+        plot = self.plot_stress_strain_data(
+            self.get_y_dir_y_strain(), self.get_y_dir_y_stress(), StrainDirection.Y.value, y_file
         )
-        self.savePlot(plot, self.yDir, StrainDirection.Z.value, self.yDirUniqueID)
+        self.save_plot(plot, self.y_dir, StrainDirection.Y.value, self.y_dir_unique_id)
+
+    def plot_y_dir_z_data(self):
+
+        z_file = self.get_file_path(
+            StrainDirection.Z.value, self.y_dir.analysis_path, self.y_dir_unique_id
+        )
+
+        plot = self.plot_stress_strain_data(
+            self.get_y_dir_z_strain(), self.get_y_dir_z_stress(), StrainDirection.Z.value, z_file
+        )
+        self.save_plot(plot, self.y_dir, StrainDirection.Z.value, self.y_dir_unique_id)
 
     """
     End Y Directory Plotters
     """
 
-    def plotZDirXData(self):
+    def plot_z_dir_x_data(self):
 
-        xFile = self.getFilePath(
-            StrainDirection.X.value, self.zDir.analysisPath, self.zDirUniqueID
+        x_file = self.get_file_path(
+            StrainDirection.X.value, self.z_dir.analysis_path, self.z_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getZDirXStrain(), self.getZDirXStress(), StrainDirection.X.value, xFile
+        plot = self.plot_stress_strain_data(
+            self.get_z_dir_x_strain(), self.get_z_dir_x_stress(), StrainDirection.X.value, x_file
         )
-        self.savePlot(plot, self.zDir, StrainDirection.X.value, self.zDirUniqueID)
+        self.save_plot(plot, self.z_dir, StrainDirection.X.value, self.z_dir_unique_id)
 
-    def plotZDirYData(self):
+    def plot_z_dir_y_data(self):
 
-        yFile = self.getFilePath(
-            StrainDirection.Y.value, self.zDir.analysisPath, self.zDirUniqueID
-        )
-
-        plot = self.plotStressStrainData(
-            self.getZDirYStrain(), self.getZDirYStress(), StrainDirection.Y.value, yFile
-        )
-        self.savePlot(plot, self.zDir, StrainDirection.Y.value, self.zDirUniqueID)
-
-    def plotZDirZData(self):
-
-        zFile = self.getFilePath(
-            StrainDirection.Z.value, self.zDir.analysisPath, self.zDirUniqueID
+        y_file = self.get_file_path(
+            StrainDirection.Y.value, self.z_dir.analysis_path, self.z_dir_unique_id
         )
 
-        plot = self.plotStressStrainData(
-            self.getZDirZStrain(), self.getZDirZStress(), StrainDirection.Z.value, zFile
+        plot = self.plot_stress_strain_data(
+            self.get_z_dir_y_strain(), self.get_z_dir_y_stress(), StrainDirection.Y.value, y_file
         )
-        self.savePlot(plot, self.zDir, StrainDirection.Z.value, self.zDirUniqueID)
+        self.save_plot(plot, self.z_dir, StrainDirection.Y.value, self.z_dir_unique_id)
+
+    def plot_z_dir_z_data(self):
+
+        z_file = self.get_file_path(
+            StrainDirection.Z.value, self.z_dir.analysis_path, self.z_dir_unique_id
+        )
+
+        plot = self.plot_stress_strain_data(
+            self.get_z_dir_z_strain(), self.get_z_dir_z_stress(), StrainDirection.Z.value, z_file
+        )
+        self.save_plot(plot, self.z_dir, StrainDirection.Z.value, self.z_dir_unique_id)
 
     """
     End Z Directory Plotters
     """
 
-    def plotEverything(self):
-        self.plotXYZAve()
-        self.plotXDirXData()
-        self.plotXDirYData()
-        self.plotXDirZData()
-        self.plotYDirXData()
-        self.plotYDirYData()
-        self.plotYDirZData()
-        self.plotZDirXData()
-        self.plotZDirYData()
-        self.plotZDirZData()
+    def plot_everything(self):
+        self.plot_xyz_ave()
+        self.plot_x_dir_x_data()
+        self.plot_x_dir_y_data()
+        self.plot_x_dir_z_data()
+        self.plot_y_dir_x_data()
+        self.plot_y_dir_y_data()
+        self.plot_y_dir_z_data()
+        self.plot_z_dir_x_data()
+        self.plot_z_dir_y_data()
+        self.plot_z_dir_z_data()
 
-    def plotXYZAve(self):
-        xStresses = self.getXDirXStress()
-        yStresses = self.getYDirYStress()
-        zStresses = self.getZDirZStress()
+    def plot_strain_directions_only(self):
+        self.plot_xyz_ave()
+        self.plot_x_dir_x_data()
+        self.plot_y_dir_y_data()
+        self.plot_z_dir_z_data()
 
-        xyzUniqueID = self.xDirUniqueID + "_" + self.yDirUniqueID + "_" + self.zDirUniqueID
+    def plot_xyz_ave(self):
+        x_stresses = self.get_x_dir_x_stress()
+        y_stresses = self.get_y_dir_y_stress()
+        z_stresses = self.get_z_dir_z_stress()
 
-        file = self.getFilePath(
-            StrainDirection.XYZ.value, self.strainDir.analysisPath,
-            xyzUniqueID
+        xyz_unique_id = self.x_dir_unique_id + "_" + self.y_dir_unique_id + "_" + self.z_dir_unique_id
+
+        file = self.get_file_path(
+            StrainDirection.XYZ.value, self.strain_dir.analysis_path,
+            xyz_unique_id
         )
-        aveStresses = []
+        ave_stresses = []
 
-        if len(xStresses) == len(yStresses) and len(xStresses) == len(zStresses) and len(yStresses) == len(zStresses):
-            for i in range(0, len(xStresses)):
-                aveStresses.append(mean([xStresses[i], yStresses[i], zStresses[i]]))
+        if len(x_stresses) == len(y_stresses) and len(x_stresses) == len(z_stresses) and len(y_stresses) == len(
+                z_stresses):
+            for i in range(0, len(x_stresses)):
+                ave_stresses.append(mean([x_stresses[i], y_stresses[i], z_stresses[i]]))
         else:
             print("The lengths don't all match.  Check data")
 
-        plot = self.plotStressStrainData(self.getXDirXStrain(), aveStresses, StrainDirection.XYZ.value, file)
-        self.savePlot(plot, self.strainDir, StrainDirection.XYZ.value, xyzUniqueID)
+        plot = self.plot_stress_strain_data(self.get_x_dir_x_strain(), ave_stresses, StrainDirection.XYZ.value, file)
+        self.save_plot(plot, self.strain_dir, StrainDirection.XYZ.value, xyz_unique_id)
 
         pass
 
-    def plotStressStrainData(
-            self, strain: [], stress: [], strainDirection: StrainDirection, saveDir: str
+    def plot_stress_strain_data(
+            self, strain: [], stress: [], strain_direction: StrainDirection, save_dir: str
     ):
 
-        strainButter, stressButter = self.getLUNARButterworthFilteredData(
+        strain_butter, stress_butter = LUNARUtils.get_lunar_butterworth_filtered_data(
             stress, strain
         )
 
-        self.getLUNARKMModulus(
-            stressButter, strainButter, strainDirection, saveDir + "_kmMod"
+        lunar_out = LUNARUtils.get_lunar_km_modulus(
+            stress_butter, strain_butter, save_dir + "_kmMod"
         )
 
+        ys_point = lunar_out[2]
+
+        yield_strength = ys_point[1]
+        elastic_mod = lunar_out[6]
+
+        if StrainDirection.X.value == strain_direction:
+            self.x_dir_elastic_mod = elastic_mod
+            self.x_dir_yield_strength = yield_strength
+        elif StrainDirection.Y.value == strain_direction:
+            self.y_dir_elastic_mod = elastic_mod
+            self.y_dir_yield_strength = yield_strength
+        elif StrainDirection.Z.value == strain_direction:
+            self.z_dir_elastic_mod = elastic_mod
+            self.z_dir_yield_strength = yield_strength
+        elif StrainDirection.XYZ.value == strain_direction:
+            self.xyz_elastic_mod = elastic_mod
+            self.xyz_yield_strength = yield_strength
+
+        x_reg = lunar_out[7]
+        y_reg = lunar_out[8]
+
         fig, ax1 = plt.subplots()
-        ax1.plot(strain, stress, color="blue")
-        ax1.plot(strainButter, stressButter, color="red")
+
+        ax1.plot(strain, stress, color="grey")
+        ax1.plot(strain_butter, stress_butter, color="blue")
+
+        slope_midpoints = self.get_slope_midpoint(min(x_reg), max(x_reg), min(y_reg), max(y_reg))
+
+        ax1.plot(x_reg, y_reg, color="orange")
+        ax1.annotate("E = " + str(round(elastic_mod / 1000, 2)) + " GPa", xy=(slope_midpoints[0], slope_midpoints[1]),
+                     xytext=(slope_midpoints[0] + 0.01, slope_midpoints[1]),
+                     arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.00', color='orange'),
+                     font='Arial', color='orange', )
+
+        yield_strain = ys_point[0]
+
+        ax1.plot(yield_strain, yield_strength, "o", color="red")
+
+        ax1.annotate("$\sigma_{ys}$ = " + str(round(yield_strength, 1)) + " MPa", xy=(yield_strain, yield_strength),
+                     xytext=(yield_strain + 0.005, yield_strength - 5),
+                     arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.00', color='r'),
+                     font='Arial', color='red',
+                     )
+
+        ax1.set_xlabel('Strain')
+        ax1.set_ylabel('Stress (MPa)')
+
         fig.tight_layout()
 
         return plt
@@ -232,219 +338,119 @@ class StrainAnalyzer(Analyzer):
     End Other Plotters
     """
 
-    def setupRelevantData(self):
-        strainDirs = [self.xDir, self.yDir, self.zDir]
-
-        for dataDir in strainDirs:
-            for key in dataDir.dataFiles.keys():
-
-                file = dataDir.dataFiles[key]
-                if file.getType() != DataFileIndicators.OFILE:
-                    print("Not an o file, can't analyze")
-                    break
-                for sectKey in file.sections.keys():
-                    section = file.sections[sectKey]
-                    print(key)
-                    # section.data is already a DataFrame but this is a more explicit way
-                    # of showing that.  It also lets IDEs autocomplete easier
-                    data = DataFrame(section.data)
-
-                    if DataColumns.X_STRAIN.value in data.columns:
-                        if dataDir.path.name.lower() == StrainDirection.X.value:
-                            self.xStrainSectionData = data
-                            self.xDirUniqueID = key
-                        elif dataDir.path.name.lower() == StrainDirection.Y.value:
-                            self.yStrainSectionData = data
-                            self.yDirUniqueID = key
-                        elif dataDir.path.name.lower() == StrainDirection.Z.value:
-                            self.zStrainSectionData = data
-                            self.zDirUniqueID = key
-        print()
-
     """
     X directory data getters
     """
 
-    def getXDirXStrain(self):
-        return self.xStrainSectionData[DataColumns.X_STRAIN.value].astype(float)
+    def get_x_dir_x_strain(self):
+        return self.x_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
 
-    def getXDirYStrain(self):
-        return self.xStrainSectionData[DataColumns.Y_STRAIN.value].astype(float)
+    def get_x_dir_y_strain(self):
+        return self.x_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
 
-    def getXDirZStrain(self):
-        return self.xStrainSectionData[DataColumns.Z_STRAIN.value].astype(float)
+    def get_x_dir_z_strain(self):
+        return self.x_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
 
-    def getXDirXStressStrain(self):
-        return self.getXDirXStress(), self.getXDirXStrain()
+    def get_x_dir_x_stress_strain(self):
+        return self.get_x_dir_x_stress(), self.get_x_dir_x_strain()
 
-    def getXDirYStressStrain(self):
-        return self.getXDirYStress(), self.getXDirYStrain()
+    def get_x_dir_y_stress_strain(self):
+        return self.get_x_dir_y_stress(), self.get_x_dir_y_strain()
 
-    def getXDirZStressStrain(self):
-        return self.getXDirZStress(), self.getXDirZStrain()
+    def get_x_dir_z_stress_strain(self):
+        return self.get_x_dir_z_stress(), self.get_x_dir_z_strain()
 
-    def getXDirXStress(self):
-        return self.xStrainSectionData[DataColumns.X_STRESS.value].astype(float)
+    def get_x_dir_x_stress(self):
+        return self.x_strain_section_data[DataColumns.X_STRESS.value].astype(float)
 
-    def getXDirYStress(self):
-        return self.xStrainSectionData[DataColumns.Y_STRESS.value].astype(float)
+    def get_x_dir_y_stress(self):
+        return self.x_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
 
-    def getXDirZStress(self):
-        return self.xStrainSectionData[DataColumns.Z_STRESS.value].astype(float)
+    def get_x_dir_z_stress(self):
+        return self.x_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
 
     """
     Y directory data getters
     """
 
-    def getYDirXStrain(self):
-        return self.yStrainSectionData[DataColumns.X_STRAIN.value].astype(float)
+    def get_y_dir_x_strain(self):
+        return self.y_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
 
-    def getYDirYStrain(self):
-        return self.yStrainSectionData[DataColumns.Y_STRAIN.value].astype(float)
+    def get_y_dir_y_strain(self):
+        return self.y_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
 
-    def getYDirZStrain(self):
-        return self.yStrainSectionData[DataColumns.Z_STRAIN.value].astype(float)
+    def get_y_dir_z_strain(self):
+        return self.y_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
 
-    def getYDirXStressStrain(self):
-        return self.getYDirXStress(), self.getYDirXStrain()
+    def get_y_dir_x_stress_strain(self):
+        return self.getYDirXStress(), self.get_y_dir_x_strain()
 
-    def getYDirYStressStrain(self):
-        return self.getYDirYStress(), self.getYDirYStrain()
+    def get_y_dir_y_stress_strain(self):
+        return self.get_y_dir_y_stress(), self.get_y_dir_y_strain()
 
-    def getYDirZStressStrain(self):
-        return self.getYDirZStress(), self.getYDirZStrain()
+    def get_y_dir_z_stress_strain(self):
+        return self.get_y_dir_z_stress(), self.get_y_dir_z_strain()
 
     def getYDirXStress(self):
-        return self.yStrainSectionData[DataColumns.X_STRESS.value].astype(float)
+        return self.y_strain_section_data[DataColumns.X_STRESS.value].astype(float)
 
-    def getYDirYStress(self):
-        return self.yStrainSectionData[DataColumns.Y_STRESS.value].astype(float)
+    def get_y_dir_y_stress(self):
+        return self.y_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
 
-    def getYDirZStress(self):
-        return self.yStrainSectionData[DataColumns.Z_STRESS.value].astype(float)
+    def get_y_dir_z_stress(self):
+        return self.y_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
 
     """
     Z directory getters
     """
 
-    def getZDirXStrain(self):
-        return self.zStrainSectionData[DataColumns.X_STRAIN.value].astype(float)
+    def get_z_dir_x_strain(self):
+        return self.z_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
 
-    def getZDirYStrain(self):
-        return self.zStrainSectionData[DataColumns.Y_STRAIN.value].astype(float)
+    def get_z_dir_y_strain(self):
+        return self.z_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
 
-    def getZDirZStrain(self):
-        return self.zStrainSectionData[DataColumns.Z_STRAIN.value].astype(float)
+    def get_z_dir_z_strain(self):
+        return self.z_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
 
-    def getZDirXStressStrain(self):
-        return self.getZDirXStress(), self.getZDirXStrain()
+    def get_z_dir_x_stress_strain(self):
+        return self.get_z_dir_x_stress(), self.get_z_dir_x_strain()
 
-    def getZDirYStressStrain(self):
-        return self.getZDirYStress(), self.getZDirYStrain()
+    def get_z_dir_y_stress_strain(self):
+        return self.get_z_dir_y_stress(), self.get_z_dir_y_strain()
 
-    def getZDirZStressStrain(self):
-        return self.getZDirZStress(), self.getZDirZStrain()
+    def get_z_dir_z_stress_strain(self):
+        return self.get_z_dir_z_stress(), self.get_z_dir_z_strain()
 
-    def getZDirXStress(self):
-        return self.zStrainSectionData[DataColumns.X_STRESS.value].astype(float)
+    def get_z_dir_x_stress(self):
+        return self.z_strain_section_data[DataColumns.X_STRESS.value].astype(float)
 
-    def getZDirYStress(self):
-        return self.zStrainSectionData[DataColumns.Y_STRESS.value].astype(float)
+    def get_z_dir_y_stress(self):
+        return self.z_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
 
-    def getZDirZStress(self):
-        return self.zStrainSectionData[DataColumns.Z_STRESS.value].astype(float)
-
-    """
-    Other getters
-    """
-
-    def __getBogusLUNARModeDict(self):
-        # Make a bogus mode directory for the LUNAR analysis object
-        # We already have all the stress-strain data so
-        # all we need it for is to do Butterworth filtering
-        # and KM Modulus calculations which don't require anything
-        # from the analysis object but the log
-        mode = {}
-        mode["parent_directory"] = ""
-        mode["logfile"] = ""
-        mode["keywords"] = []
-        mode["sections"] = []
-        mode["xdata"] = []
-        mode["ydata"] = []
-        mode["xcompute"] = ""
-        mode["ycompute"] = ""
-
-        return mode
-
-    def getLUNARButterworthFilteredData(self, stress, strain):
-
-        lunarAnlzr = LUNARLogAnalysis(self.__getBogusLUNARModeDict())
-        return lunarAnlzr.butterworth_lowpass(
-            strain,
-            stress,
-            min(strain),
-            max(strain),
-            "op",
-            2,
-            "msr",
-            "y",
-            True,
-            False,
-            False,
-            "",
-            300,
-        )
-
-    def getLUNARKMModulus(
-            self, stress, strain, direction: StrainDirection, filePath: str
-    ):
-        lunarAnlzr = LUNARLogAnalysis(self.__getBogusLUNARModeDict())
-
-        t1 = ""
-        t2 = ""
-
-        if StrainDirection.X == direction:
-            t1 = DataColumns.Y_STRAIN.value
-            t2 = DataColumns.Z_STRAIN.value
-        elif StrainDirection.Y == direction:
-            t1 = DataColumns.X_STRAIN.value
-            t2 = DataColumns.Z_STRAIN.value
-        elif StrainDirection.Z == direction:
-            t1 = DataColumns.X_STRAIN.value
-            t2 = DataColumns.Y_STRAIN.value
-
-        lunarAnlzr.kemppainen_muzzy_modulus(
-            strain,
-            stress,
-            min(strain),
-            max(strain),
-            0.005,
-            0.0,
-            "rfs",
-            1,
-            0.0,
-            t1,
-            t2,
-            False,
-            True,
-            filePath,
-            300,
-        )
-        pass
+    def get_z_dir_z_stress(self):
+        return self.z_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
 
     """
     End getters
     """
 
-    def getFilePath(self, directionStr, analysisPath, xDirUniqueID):
+    @staticmethod
+    def get_file_path(directionStr, analysisPath, xDirUniqueID):
         return str(str(analysisPath) + "\\" + directionStr + "_" + xDirUniqueID)
 
-        pass
-
-    def savePlot(
-            self, plot: plt, directory: Directory, direction: str, uniqueID: str
+    @staticmethod
+    def save_plot(
+            plot: plt, directory: Directory, direction: str, uniqueID: str
     ):
         saveDir = str(
             str(directory.path) + "\\analysis" + "\\" + direction + "_" + uniqueID
         )
         plot.savefig(saveDir, dpi=300)
+
+    @staticmethod
+    def get_slope_midpoint(x_lo, x_hi, y_lo, y_hi):
+        mid_x = (x_hi + x_lo) / 2
+        mid_y = (y_hi + y_lo) / 2
+
+        return [mid_x, mid_y]
