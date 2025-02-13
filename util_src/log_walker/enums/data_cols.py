@@ -24,6 +24,17 @@ class DataColumns(Enum):
     The data columns you want to identify
     """
 
+    # General Data Columns
+    STEP = "Step"
+    TEMP = "Temp"
+    DENSITY = "Density"
+    
+    # Pyrolysis Data Columns
+    CHAR_YIELD = "v_char_yield"
+    INITIAL_MASS = "v_mass_initial"
+    TIMESTEP_MASS = "v_mass_stepped"
+
+    # Stress Strain Data Columns
     X_STRAIN = "v_etruex"
     Y_STRAIN = "v_etruey"
     Z_STRAIN = "v_etruez"

@@ -18,14 +18,14 @@ class LogFile(object):
 
     name: str
     extn: str
-    dirPath: str
-    uniqueID: str
+    dir_path: str
+    unique_id: str
 
-    def __init__(self, dirPath, name, uniqueID, extn):
-        self.dirPath = dirPath
+    def __init__(self, dir_path, name, unique_id, extn):
+        self.dir_path = dir_path
         self.name = name
-        self.uniqueID = uniqueID
+        self.unique_id = unique_id
         self.extn = extn
 
-    def getFullFilePath(self):
-        return self.dirPath + "\\" + self.name
+    def get_full_file_path(self):
+        return self.dir_path + "\\" + self.name

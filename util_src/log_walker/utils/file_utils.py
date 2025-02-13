@@ -9,9 +9,10 @@ Houghton, MI 49931
 This class contains utility functions related to files and dirs
 
 """
-
+import csv
 import os
 from pathlib import Path
+
 from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
 from util_src.log_walker.enums.strain_direction import StrainDirection
 
@@ -108,7 +109,7 @@ class DirFileUtils(object):
     @classmethod
     def getSubDirs(cls, path):
         """
-        Description: Takes a full directory path and returns the sub directories as \n
+        Description: Takes a full directory path and returns the subdirectories as \n
                      a list of pathlib.Paths \n
         Input: \n
                 path(string or pathlib.Path) - The full path of the directory \n
@@ -118,6 +119,7 @@ class DirFileUtils(object):
 
         return cls.getFilesAndSubDirs(path)[1]
 
+    @staticmethod
     def getPathObj(path):
         """
         Description: Takes a full directory path and returns a pathlib.Path object of that directory path \n
@@ -162,8 +164,8 @@ class DirFileUtils(object):
                         if directory == temp:
                             continue
                         elif (
-                            repBaseName in temp.name
-                            and temp.name[len(temp.name) - 1].isdigit()
+                                repBaseName in temp.name
+                                and temp.name[len(temp.name) - 1].isdigit()
                         ):
                             repNum = cls.getRepNum(temp)
                             if repNum > 0 and temp not in replicateDirs[repBaseName]:
@@ -205,7 +207,8 @@ class DirFileUtils(object):
         """
         return cls.getRepRootAndNum(dictionary)[0]
 
-    def getRepRootAndNum(directoryName: str):
+    @staticmethod
+    def getRepRootAndNum(directoryName: Path):
         """
         Description: \n
             Takes a replicate directory name and gets the base name and the replicate number
@@ -254,6 +257,7 @@ class DirFileUtils(object):
 
         return isDirRep
 
+    @staticmethod
     def isStrainDir(path: Path):
         """
         Description: \n
@@ -266,6 +270,7 @@ class DirFileUtils(object):
         """
         return StrainDirection.isStrainRootDir(path)
 
+    @staticmethod
     def isDataDir(path):
         """
         Description: \n
@@ -284,16 +289,13 @@ class DirFileUtils(object):
             print("unrecognized format")
             return 1 / 0
 
-        fileNames = [file.name for file in path.iterdir() if file.is_file()]
+        file_names = [file.name for file in path.iterdir() if file.is_file()]
 
-        if DataFileIndicators.isDataFileinFiles(fileNames):
+        if DataFileIndicators.isDataFileinFiles(file_names):
             return True
         return False
 
-        if DataFileIndicators.isDataFileinFiles(fileNames):
-            return True
-        return False
-
+    @staticmethod
     def isDir(path: str):
         """
         Description: \n
@@ -305,6 +307,7 @@ class DirFileUtils(object):
         """
         return os.path.isdir(path)
 
+    @staticmethod
     def openFile(name: str, parameter: str):
         """
         Description: If a file already exists, this function will truncate it to zero bytes \n
@@ -324,3 +327,13 @@ class DirFileUtils(object):
         else:
             print("Invalid Parameter")
             return 1 / 0
+
+    @staticmethod
+    def write_csv_from_dict(csv_dict: {}, save_dir: str):
+
+        with open(save_dir, "w", newline="") as file:
+            writer = csv.writer(file)
+
+            writer.writerow(csv_dict.keys())
+
+            writer.writerows(zip(*csv_dict.values()))

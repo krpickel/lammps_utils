@@ -39,13 +39,13 @@ class ReplicateDirectory(Directory):
             for repDir in replicate_dirs[key]:
 
                 if DirFileUtils.isDataDir(repDir):
-                    print("Creating data directory:" + str(repDir))
+                    print("Creating data directory object:" + str(repDir))
 
                     self.type = DirType.DATA
                     rep_data_dirs.append(DataDirectory(repDir))
                 elif DirFileUtils.isStrainDir(repDir):
-                    print("Creating strain directory:" + str(repDir))
-                    
+                    print("Creating strain directory object:" + str(repDir))
+
                     self.type = DirType.STRAIN
                     rep_data_dirs.append(StrainDirectory(repDir))
                 else:

@@ -23,7 +23,7 @@ class Directory(object):
     Variables:
         path(pathlib.Path) -A path object for the directory
         subDirs(array) - An array containing the subdirectory names
-        files(array) - An array containing all of the file names
+        files(array) - An array containing the file names
     """
 
     path: Path
@@ -48,6 +48,7 @@ class Directory(object):
         self.dataPresent = DirFileUtils.isDataDir(path)
         self.repPresent = DirFileUtils.isRepDir(path)
         self.strainPresent = DirFileUtils.isStrainDir(path)
+        self.analysis_path = self.path / "analysis"
 
         self.setupDirectory()
 
@@ -76,7 +77,4 @@ class Directory(object):
         return subDirObjs
 
     def create_analysis_dir(self):
-        # This is the correct way to append to a Path object
-        path = self.path / "analysis"
-        path.mkdir(exist_ok=True)
-        self.analysis_path = path
+        self.analysis_path.mkdir(exist_ok=True)

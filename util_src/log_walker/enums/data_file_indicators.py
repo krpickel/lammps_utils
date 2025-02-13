@@ -15,45 +15,45 @@ from enum import Enum
 
 
 class DataFileIndicators(Enum):
-
     OFILE = ".sh.o"
     DELFILE = ".del"
+    POSFILE = ".pos"
 
-    def isFileType(self, fileName):
+    def is_file_type(self, file_name):
         """
         Description:
             returns true if the file name is the same type as the indicator
             otherwise returns false.
             e.g.
-                DataFileIndicators.OFILE.isFileType(fileName)
+                DataFileIndicators.OFILE.isFileType(file_name)
         Input:
-            fileName(string) - The file name
+            file_name(string) - The file name
         Return:
             bool
         """
 
-        if self.value in fileName:
+        if self.value in file_name:
             return True
         return False
 
     @classmethod
-    def isDataFileinFiles(self, fileNames: []):
+    def isDataFileinFiles(cls, file_names: []):
         """
         Description:
             returns true if there is a data file in the group of files given
             otherwise returns false
         Input:
-            fileNames(Array) - An array of file names
+            file_names(Array) - An array of file names
         Return:
             bool
         """
-        for file in fileNames:
-            if self.isDataFile(file):
+        for file in file_names:
+            if cls.is_data_file(file):
                 return True
         return False
 
     @classmethod
-    def isDataFile(self, fileName):
+    def is_data_file(cls, file_name):
         """
         Description:
             returns true if the file contains any of the string indicators in this enum
@@ -63,7 +63,7 @@ class DataFileIndicators(Enum):
         Return:
             bool
         """
-        for indicator in self:
-            if indicator.value in fileName:
+        for indicator in cls:
+            if indicator.value in file_name:
                 return True
         return False

@@ -6,17 +6,21 @@ Michigan Technological University
 1400 Townsend Dr.
 Houghton, MI 49931
 
-This is the class for analyzing a strain directory
+This is the class for analyzing a strain directory.  This is meant to analyze three strain directories, one for each
+uniaxial direction (x, y, z).  There should be a directory for x, y, and z strain directions, the directory names should
+ also be "x", "y", and "z".  The directories should hold one o file, lammps dump, with strain data.
 
+For valid column names, see the DataColumns enum.
+
+Will be expanded later to do shear analysis as well
 """
 
 # Import Python libs
+import statistics
 from pathlib import Path
-from statistics import mean
 
 # Import external libs
 from matplotlib import pyplot as plt
-from pandas.core.frame import DataFrame
 
 # Import local libs
 from util_src.log_walker.enums.data_cols import DataColumns
@@ -26,6 +30,7 @@ from util_src.log_walker.objects.anlzer.analizer import Analyzer
 from util_src.log_walker.objects.dir_objs.data_dir import DataDirectory
 from util_src.log_walker.objects.dir_objs.directory import Directory
 from util_src.log_walker.objects.dir_objs.strain_dir import StrainDirectory
+from util_src.log_walker.utils.file_utils import DirFileUtils
 from util_src.log_walker.utils.lunar_utils import LUNARUtils
 
 
@@ -46,9 +51,9 @@ class StrainAnalyzer(Analyzer):
     x_dir_unique_id: str
     y_dir_unique_id: str
     z_dir_unique_id: str
-    x_strain_section_data: DataFrame
-    y_strain_section_data: DataFrame
-    z_strain_section_data: DataFrame
+    x_strain_section_data: dict
+    y_strain_section_data: dict
+    z_strain_section_data: dict
 
     def __init__(self, path):
         """
@@ -90,19 +95,18 @@ class StrainAnalyzer(Analyzer):
         strainDirs = [self.x_dir, self.y_dir, self.z_dir]
 
         for dataDir in strainDirs:
-            for key in dataDir.dataFiles.keys():
+            for key in dataDir.data_files.keys():
 
-                file = dataDir.dataFiles[key]
-                if file.getType() != DataFileIndicators.OFILE:
-                    print("Not an o file_objs, can't analyze")
+                file = dataDir.data_files[key]
+                if file.get_type() != DataFileIndicators.OFILE:
+                    print("Not an o file, can't analyze")
                     break
                 for sectKey in file.sections.keys():
                     section = file.sections[sectKey]
-                    # section.data is already a DataFrame but this is a more explicit way
-                    # of showing that.  It also lets IDEs autocomplete easier
-                    data = DataFrame(section.data)
 
-                    if DataColumns.X_STRAIN.value in data.columns:
+                    data = section.data
+
+                    if DataColumns.X_STRAIN.value in data.keys():
                         if dataDir.path.name.lower() == StrainDirection.X.value:
                             self.x_strain_section_data = data
                             self.x_dir_unique_id = key
@@ -229,7 +233,6 @@ class StrainAnalyzer(Analyzer):
     """
 
     def plot_everything(self):
-        self.plot_xyz_ave()
         self.plot_x_dir_x_data()
         self.plot_x_dir_y_data()
         self.plot_x_dir_z_data()
@@ -241,46 +244,20 @@ class StrainAnalyzer(Analyzer):
         self.plot_z_dir_z_data()
 
     def plot_strain_directions_only(self):
-        self.plot_xyz_ave()
         self.plot_x_dir_x_data()
         self.plot_y_dir_y_data()
         self.plot_z_dir_z_data()
-
-    def plot_xyz_ave(self):
-        x_stresses = self.get_x_dir_x_stress()
-        y_stresses = self.get_y_dir_y_stress()
-        z_stresses = self.get_z_dir_z_stress()
-
-        xyz_unique_id = self.x_dir_unique_id + "_" + self.y_dir_unique_id + "_" + self.z_dir_unique_id
-
-        file = self.get_file_path(
-            StrainDirection.XYZ.value, self.strain_dir.analysis_path,
-            xyz_unique_id
-        )
-        ave_stresses = []
-
-        if len(x_stresses) == len(y_stresses) and len(x_stresses) == len(z_stresses) and len(y_stresses) == len(
-                z_stresses):
-            for i in range(0, len(x_stresses)):
-                ave_stresses.append(mean([x_stresses[i], y_stresses[i], z_stresses[i]]))
-        else:
-            print("The lengths don't all match.  Check data")
-
-        plot = self.plot_stress_strain_data(self.get_x_dir_x_strain(), ave_stresses, StrainDirection.XYZ.value, file)
-        self.save_plot(plot, self.strain_dir, StrainDirection.XYZ.value, xyz_unique_id)
-
-        pass
 
     def plot_stress_strain_data(
             self, strain: [], stress: [], strain_direction: StrainDirection, save_dir: str
     ):
 
-        strain_butter, stress_butter = LUNARUtils.get_lunar_butterworth_filtered_data(
+        stress_butter = LUNARUtils.get_lunar_butterworth_filtered_data(
             stress, strain
         )
 
         lunar_out = LUNARUtils.get_lunar_km_modulus(
-            stress_butter, strain_butter, save_dir + "_kmMod"
+            stress_butter, strain, save_dir + "_kmMod"
         )
 
         ys_point = lunar_out[2]
@@ -306,8 +283,8 @@ class StrainAnalyzer(Analyzer):
 
         fig, ax1 = plt.subplots()
 
-        ax1.plot(strain, stress, color="grey")
-        ax1.plot(strain_butter, stress_butter, color="blue")
+        # ax1.plot(strain, stress, color="grey")
+        ax1.plot(strain, stress_butter, color="blue")
 
         slope_midpoints = self.get_slope_midpoint(min(x_reg), max(x_reg), min(y_reg), max(y_reg))
 
@@ -315,14 +292,14 @@ class StrainAnalyzer(Analyzer):
         ax1.annotate("E = " + str(round(elastic_mod / 1000, 2)) + " GPa", xy=(slope_midpoints[0], slope_midpoints[1]),
                      xytext=(slope_midpoints[0] + 0.01, slope_midpoints[1]),
                      arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.00', color='orange'),
-                     font='Arial', color='orange', )
+                     font='Arial', color='darkorange', )
 
         yield_strain = ys_point[0]
 
         ax1.plot(yield_strain, yield_strength, "o", color="red")
 
         ax1.annotate("$\sigma_{ys}$ = " + str(round(yield_strength, 1)) + " MPa", xy=(yield_strain, yield_strength),
-                     xytext=(yield_strain + 0.005, yield_strength - 5),
+                     xytext=(yield_strain - 0.013, yield_strength + 20),
                      arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.00', color='r'),
                      font='Arial', color='red',
                      )
@@ -343,13 +320,13 @@ class StrainAnalyzer(Analyzer):
     """
 
     def get_x_dir_x_strain(self):
-        return self.x_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.X_STRAIN.value]))
 
     def get_x_dir_y_strain(self):
-        return self.x_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.Y_STRAIN.value]))
 
     def get_x_dir_z_strain(self):
-        return self.x_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.Z_STRAIN.value]))
 
     def get_x_dir_x_stress_strain(self):
         return self.get_x_dir_x_stress(), self.get_x_dir_x_strain()
@@ -361,26 +338,26 @@ class StrainAnalyzer(Analyzer):
         return self.get_x_dir_z_stress(), self.get_x_dir_z_strain()
 
     def get_x_dir_x_stress(self):
-        return self.x_strain_section_data[DataColumns.X_STRESS.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.X_STRESS.value]))
 
     def get_x_dir_y_stress(self):
-        return self.x_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.Y_STRESS.value]))
 
     def get_x_dir_z_stress(self):
-        return self.x_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
+        return list(map(float, self.x_strain_section_data[DataColumns.Z_STRESS.value]))
 
     """
     Y directory data getters
     """
 
     def get_y_dir_x_strain(self):
-        return self.y_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.X_STRAIN.value]))
 
     def get_y_dir_y_strain(self):
-        return self.y_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.Y_STRAIN.value]))
 
     def get_y_dir_z_strain(self):
-        return self.y_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.Z_STRAIN.value]))
 
     def get_y_dir_x_stress_strain(self):
         return self.getYDirXStress(), self.get_y_dir_x_strain()
@@ -392,59 +369,95 @@ class StrainAnalyzer(Analyzer):
         return self.get_y_dir_z_stress(), self.get_y_dir_z_strain()
 
     def getYDirXStress(self):
-        return self.y_strain_section_data[DataColumns.X_STRESS.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.X_STRESS.value]))
 
     def get_y_dir_y_stress(self):
-        return self.y_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.Y_STRESS.value]))
 
     def get_y_dir_z_stress(self):
-        return self.y_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
+        return list(map(float, self.y_strain_section_data[DataColumns.Z_STRESS.value]))
 
     """
     Z directory getters
     """
 
     def get_z_dir_x_strain(self):
-        return self.z_strain_section_data[DataColumns.X_STRAIN.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.X_STRAIN.value]))
 
     def get_z_dir_y_strain(self):
-        return self.z_strain_section_data[DataColumns.Y_STRAIN.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.Y_STRAIN.value]))
 
     def get_z_dir_z_strain(self):
-        return self.z_strain_section_data[DataColumns.Z_STRAIN.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.Z_STRAIN.value]))
 
     def get_z_dir_x_stress_strain(self):
-        return self.get_z_dir_x_stress(), self.get_z_dir_x_strain()
+        return float, self.get_z_dir_x_stress(), self.get_z_dir_x_strain()
 
     def get_z_dir_y_stress_strain(self):
-        return self.get_z_dir_y_stress(), self.get_z_dir_y_strain()
+        return float, self.get_z_dir_y_stress(), self.get_z_dir_y_strain()
 
     def get_z_dir_z_stress_strain(self):
         return self.get_z_dir_z_stress(), self.get_z_dir_z_strain()
 
     def get_z_dir_x_stress(self):
-        return self.z_strain_section_data[DataColumns.X_STRESS.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.X_STRESS.value]))
 
     def get_z_dir_y_stress(self):
-        return self.z_strain_section_data[DataColumns.Y_STRESS.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.Y_STRESS.value]))
 
     def get_z_dir_z_stress(self):
-        return self.z_strain_section_data[DataColumns.Z_STRESS.value].astype(float)
+        return list(map(float, self.z_strain_section_data[DataColumns.Z_STRESS.value]))
 
     """
     End getters
     """
 
+    def get_x_dir_elastic_mod(self):
+        return self.x_dir_elastic_mod
+
+    def get_y_dir_elastic_mod(self):
+        return self.y_dir_elastic_mod
+
+    def get_z_dir_elastic_mod(self):
+        return self.z_dir_elastic_mod
+
+    def get_x_dir_yield_strength(self):
+        return self.x_dir_yield_strength
+
+    def get_y_dir_yield_strength(self):
+        return self.y_dir_yield_strength
+
+    def get_z_dir_yield_strength(self):
+        return self.z_dir_yield_strength
+
+    def get_ave_elastic_mod_w_st_dev(self):
+        return statistics.mean(
+            [self.x_dir_elastic_mod, self.y_dir_elastic_mod, self.z_dir_elastic_mod]), statistics.stdev(
+            [self.x_dir_elastic_mod, self.y_dir_elastic_mod, self.z_dir_elastic_mod])
+
+    def get_ave_yield_strength_w_st_dev(self):
+        return statistics.mean(
+            [self.x_dir_yield_strength, self.y_dir_yield_strength, self.z_dir_yield_strength]), statistics.stdev(
+            [self.x_dir_yield_strength, self.y_dir_yield_strength, self.z_dir_yield_strength])
+
     @staticmethod
-    def get_file_path(directionStr, analysisPath, xDirUniqueID):
-        return str(str(analysisPath) + "\\" + directionStr + "_" + xDirUniqueID)
+    def get_file_path(direction_str, analysis_path, dir_unique_id):
+        return str(str(analysis_path) + "\\" + direction_str + "_" + dir_unique_id)
+
+    def make_elastic_mod_yield_strength_table(self):
+        DirFileUtils.write_csv_from_dict({"direction": ["x", "y", "z"],
+                                          "elastic modulus": [self.x_dir_elastic_mod, self.y_dir_elastic_mod,
+                                                              self.z_dir_elastic_mod],
+                                          "Yield Strength": [self.x_dir_yield_strength, self.y_dir_yield_strength,
+                                                             self.z_dir_yield_strength]},
+                                         str(self.strain_dir.analysis_path) + "\\mech_props.csv")
 
     @staticmethod
     def save_plot(
-            plot: plt, directory: Directory, direction: str, uniqueID: str
+            plot: plt, directory: Directory, direction: str, unique_id: str
     ):
         saveDir = str(
-            str(directory.path) + "\\analysis" + "\\" + direction + "_" + uniqueID
+            str(directory.path) + "\\analysis" + "\\" + direction + "_" + unique_id
         )
         plot.savefig(saveDir, dpi=300)
 

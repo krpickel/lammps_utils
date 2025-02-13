@@ -6,13 +6,11 @@ Michigan Technological University
 1400 Townsend Dr.
 Houghton, MI 49931
 
-This class is meant to be contain all of the data in an o file_objs
+This class contains all the data in an o file
 
 """
 
 import copy
-
-import pandas as pd
 
 from util_src.log_walker.enums.data_file_indicators import DataFileIndicators
 from util_src.log_walker.objects.file_objs.log_file import LogFile
@@ -21,24 +19,27 @@ from util_src.log_walker.objects.file_objs.log_file import LogFile
 class OFile(LogFile):
     errors: {}
     sections: {}
-    dataSectionIDs: []
+    data_section_ids: []
     type: DataFileIndicators
     warnings: {}
 
-    def __init__(self, dirPath, name, uniqueID, extn):
-        super().__init__(dirPath, name, uniqueID, extn)
+    def __init__(self, dir_path, name, unique_id, extn):
+        super().__init__(dir_path, name, unique_id, extn)
 
-        self.dataSectoionIDs = []
+        self.data_section_ids = []
         self.errors = {}
         self.sections = {}
         self.warnings = {}
         self.type = DataFileIndicators.OFILE
 
-        print("Reading o file: " + uniqueID)
-        self.splitSections()
-        print("Done reading: " + uniqueID)
+        print("Reading o file: " + unique_id)
+        # start_file_time = time.time()
+        self.split_sections()
+        # end_time = time.time()
+        print("Done reading: " + unique_id)
+        # print("OFile read time: " + str(end_time - start_file_time) + " s")
 
-    def splitSections(self):
+    def split_sections(self):
 
         # TODO: alphabetize
         preDataHeaderLine = "Per MPI rank"
@@ -52,26 +53,25 @@ class OFile(LogFile):
         errorID = 0
         sectionID = 1
 
-        with open(self.getFullFilePath(), "r") as file:
-            previousData = pd.DataFrame()
+        with open(self.get_full_file_path(), "r") as file:
+            previousData = []
             for line in file:
                 # if inHeader:
                 #    if headerSec == None:
                 #        headerSec = HeaderSection(0)
-                if line.strip() != "" and not line == None:
+                if line.strip() != "" and not line is None:
                     if inData:
                         line = line.strip().split()
-                        if previousData.empty:
+                        if not previousData:
                             if headers != line:
                                 dataSect = DataSection(sectionID)
                                 sectionID += 1
                                 dataSect.setDataHeaders(line)
                                 headers = line
-                                previousData = pd.DataFrame(line)
+                                previousData = line
                             else:
-                                previousData = pd.DataFrame(
-                                    dataSect.data.loc[len(dataSect.data) - 1]
-                                )
+                                previousData = dataSect.get_previous_row()
+
                         elif line[0] == "WARNING:":
                             self.warnings[warningID] = line
                             warningID = +1
@@ -80,24 +80,21 @@ class OFile(LogFile):
                             errorID = +1
                         elif "Loop" == line[0]:
                             inData = False
-                            previousData = pd.DataFrame()
-                            # Need to use deepcopy or else the value in the dictionary
+
+                            previousData = []
+                            # Need to use copy or else the value in the dictionary
                             # will keep referencing dataSect and will be overridden
-                            self.sections[dataSect.uniqueID] = copy.deepcopy(dataSect)
-                            # previousData.iloc[0].iloc[0] gets the first value in the first column
-                            # not the cleanest but it works
-                        elif (
-                                line[0] != previousData.iloc[0].iloc[0] and line != headers
-                        ):
-                            dataSect.addDataRow(line)
-                            previousData = pd.DataFrame(line)
+                            self.sections[dataSect.unique_id] = copy.copy(dataSect)
+
+                        elif line[0] != previousData[0] and line != headers:
+                            dataSect.add_data_row(line)
+                            previousData = line
 
                     if "LAMMPS" in line:
                         # TODO: capture meaningful header section data
                         inHeader = True
                     elif preDataHeaderLine in line:
                         inData = True
-
                     if "WARNING" in line[0]:
                         self.warnings[warningID] = line
                         warningID = +1
@@ -105,37 +102,55 @@ class OFile(LogFile):
                         self.errors[errorID] = line
                         errorID = +1
 
-    def getType(self):
+    def get_type(self):
         return self.type
 
 
 class Section(object):
-    uniqueID: int
-    sectionType: str
+    unique_id: int
+    section_type: str
 
     def __init__(self, uniqueID, sectType):
-        self.uniqueID = uniqueID
-        self.sectionType = sectType
+        self.unique_id = uniqueID
+        self.section_type = sectType
 
 
 class DataSection(Section):
-    data: pd.DataFrame
-    headerOrder: {}
+    data: {}
+    header_order: {}
 
     def __init__(self, uniqueID):
         super().__init__(uniqueID, "data")
-        self.data = pd.DataFrame()
-        self.headerOrder = {}
+        self.header_order = {}
+        self.data = {}
 
     def setDataHeaders(self, headers: []):
-        headerNum = 0
+        header_num = 0
         for header in headers:
-            self.headerOrder[header] = headerNum
+            self.header_order[header] = header_num
             self.data[header] = []
-            headerNum += 1
+            header_num += 1
 
-    def addDataRow(self, newRow: []):
-        self.data.loc[len(self.data)] = newRow
+    def add_data_row(self, new_row: []):
+
+        for key in self.header_order.keys():
+            data = new_row[self.header_order[key]]
+            try:
+                self.data[key].append(int(data))
+            except ValueError:
+                try:
+                    self.data[key].append(float(data))
+                except ValueError:
+                    self.data[key].append(data)
+
+    def get_previous_row(self):
+        numRows = len(self.data["Step"])
+        return_row = []
+
+        for key in self.header_order.keys():
+            return_row.append(self.data[key][numRows - 1])
+
+        return return_row
 
 
 class SimBox:
@@ -152,7 +167,7 @@ class SimBox:
 
 
 class HeaderSection(Section):
-    headerAtoms: int
+    header_atoms: int
     velocities: int
     bonds: int
     angles: int

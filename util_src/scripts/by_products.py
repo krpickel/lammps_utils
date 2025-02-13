@@ -1,6 +1,6 @@
 import dataframe_image as dfi
 import matplotlib.pyplot as plt
-import pandas as pd
+
 from util_src.objects import read_lammps_output as rd
 from util_src.objects.DeletedClusterMassPercentOverTime import (
     DeletedClusterMassPercentOverTime,
@@ -23,8 +23,8 @@ for timestep in delTimesteps:
 
         print(cluster.clusterStr)
         print(cluster.numCluster)
-        print("weight: " + str(cluster.getTotalWeight()))
-        yData.append(cluster.getTotalWeight())
+        print("weight: " + str(cluster.get_total_weight()))
+        yData.append(cluster.get_total_weight())
         xData.append(int(timestep) * 0.1 / 1000)
 
 print(deletedClusterSet)
@@ -33,15 +33,15 @@ deletedClusterWeightTotals = {}
 deletedClusterMassPercentage = {}
 deletedClusterMassPercentageOverTime = {}
 
-nameColStr = "Name"
-totalMassStr = "Total Mass (amu)"
-massPercent = "Mass Percentage (%)"
+name_col_str = "Name"
+total_mass_str = "Total Mass (amu)"
+mass_percent = "Mass Percentage (%)"
 
-clusterTable = pd.DataFrame({nameColStr: [], totalMassStr: [], massPercent: []})
-for clusterName in deletedClusterSet:
+cluster_table = {name_col_str: [], total_mass_str: [], mass_percent: []}
+for cluster_name in deletedClusterSet:
 
-    deletedClusterWeightTotals[clusterName] = 0
-    deletedClusterMassPercentageOverTime[clusterName] = []
+    deletedClusterWeightTotals[cluster_name] = 0
+    deletedClusterMassPercentageOverTime[cluster_name] = []
 
     for timestep in delTimesteps:
         # the data goes all the way to 5000K in some files, so we want to
@@ -49,33 +49,33 @@ for clusterName in deletedClusterSet:
         # Can be modified to change the temperature range
         if int(timestep) <= 2900000:
             for cluster in delTimesteps[timestep]:
-                if cluster.clusterStr == clusterName:
+                if cluster.clusterStr == cluster_name:
                     deletedClusterMassPercentTimestep = (
                         DeletedClusterMassPercentOverTime()
                     )
-                    deletedClusterWeightTotals[clusterName] += cluster.getTotalWeight()
+                    deletedClusterWeightTotals[cluster_name] += cluster.getTotalWeight()
                     deletedClusterMassPercentTimestep.timestep = timestep
                     deletedClusterMassPercentTimestep.totalMassPercent = 100 * (
-                        deletedClusterWeightTotals[clusterName] / initial_mass
+                            deletedClusterWeightTotals[cluster_name] / initial_mass
                     )
-                    deletedClusterMassPercentageOverTime[clusterName].append(
+                    deletedClusterMassPercentageOverTime[cluster_name].append(
                         deletedClusterMassPercentTimestep
                     )
 
-    deletedClusterWeightTotals[clusterName] = round(
-        deletedClusterWeightTotals[clusterName], 2
+    deletedClusterWeightTotals[cluster_name] = round(
+        deletedClusterWeightTotals[cluster_name], 2
     )
-    deletedClusterMassPercentage[clusterName] = round(
-        100 * deletedClusterWeightTotals[clusterName] / initial_mass, 2
+    deletedClusterMassPercentage[cluster_name] = round(
+        100 * deletedClusterWeightTotals[cluster_name] / initial_mass, 2
     )
 
-    tableRow = {
-        nameColStr: clusterName,
-        totalMassStr: deletedClusterWeightTotals[clusterName],
-        massPercent: deletedClusterMassPercentage[clusterName],
-    }
-
-    clusterTable = clusterTable._append(tableRow, ignore_index=True)
+    for key in cluster_table.keys():
+        if name_col_str == key:
+            cluster_table[key].append(cluster_name)
+        elif total_mass_str == key:
+            cluster_table[key].append(deletedClusterWeightTotals[cluster_name])
+        elif mass_percent == key:
+            cluster_table[key].append(deletedClusterMassPercentage[cluster_name])
 
 deletedXData = {}
 deletedYData = {}
@@ -90,8 +90,8 @@ for key in deletedClusterMassPercentageOverTime:
     deletedXData[key] = tempX
     deletedYData[key] = tempY
 
-clusterTable = clusterTable.sort_values(by=[massPercent], ascending=False)
-dfi.export(clusterTable, outDir + "deletedClusters.png", dpi=300)
+cluster_table = cluster_table.sort_values(by=[mass_percent], ascending=False)
+dfi.export(cluster_table, outDir + "deletedClusters.png", dpi=300)
 
 overOnePercent = set()
 
@@ -109,7 +109,6 @@ for key in deletedYData:
         yData = deletedYData[key]
 
     ax.plot(xData, yData, label=key)
-
 
 plt.legend()
 plt.savefig(outDir + "clusters_deleted_No_Oxy_No_Hydro.png", dpi=300)
